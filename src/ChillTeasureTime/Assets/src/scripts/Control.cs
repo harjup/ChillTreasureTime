@@ -3,9 +3,8 @@ using System.Collections;
 
 public class Control : MonoBehaviour
 {
-
     private Rigidbody _rigidbody;
-    public float BaseSpeed = 20f; 
+    public float BaseSpeed = 10; 
 
 	// Use this for initialization
 	void Start ()
@@ -19,6 +18,14 @@ public class Control : MonoBehaviour
         var xVel = Input.GetAxisRaw("Horizontal") * BaseSpeed;
         var zVel = Input.GetAxisRaw("Vertical") * BaseSpeed;
 
-        _rigidbody.velocity = new Vector3(xVel, _rigidbody.velocity.y, zVel);
+        var yVel = _rigidbody.velocity.y - (20 * Time.fixedDeltaTime);
+	    
+	    if (Input.GetKeyDown(KeyCode.Z) && yVel < 1f)
+	    {
+	        yVel = 10f;
+	    }
+
+        _rigidbody.velocity = new Vector3(xVel, yVel, zVel);
+
 	}
 }
