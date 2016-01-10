@@ -13,10 +13,14 @@ public class Nest : MonoBehaviour
 
     public List<GameObject> ShinyBits = new List<GameObject>();
 
+    public GameObject CanDepositObject;
+
     public void Start()
     {
         var shinyBitsTransform = transform
             .FindChild("ShinyBits");
+
+        CanDepositObject = transform.FindChild("CanDeposit").gameObject;
 
         foreach (Transform t in shinyBitsTransform)
         {
@@ -31,7 +35,7 @@ public class Nest : MonoBehaviour
 
     public void Update()
     {
-       
+        CanDepositObject.SetActive(State.Instance.PlayerShinyCount > 0);
     }
 
     public void UpdateShinyDisplay()
