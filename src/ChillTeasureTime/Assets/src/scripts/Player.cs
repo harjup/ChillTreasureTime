@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using System.Linq;
 using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
     private Control _control;
+    
 
     void Start()
     {
@@ -62,8 +64,21 @@ public class Player : MonoBehaviour
         transform.DOMove(tab.EnterTarget.transform.position, .5f).OnComplete(() => { _control.Disabled = false; });
         
         // Pull info off the door or tab for what our animation should be
+    }
 
+    public void AddExaminable(Signpost signpost)
+    {
+        if (!_control.CurrentExaminables.Contains(signpost))
+        {
+            _control.CurrentExaminables.Add(signpost);
+        }
+    }
 
-
+    public void RemoveExaminable(Signpost signpost)
+    {
+        if (_control.CurrentExaminables.Contains(signpost))
+        {
+            _control.CurrentExaminables.Remove(signpost);
+        }
     }
 }
