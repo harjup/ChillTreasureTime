@@ -6,7 +6,8 @@ using UnityEngine;
 public class State : Singleton<State>
 {
     public LevelEntrance LevelEntrance;
-    public int ShinyCount;
+    public int PlayerShinyCount;
+    public int StoredShinyCount;
     public readonly List<Sequence> ImportantSequences = new List<Sequence>();
 
     public void SetLevelEntrance(LevelEntrance levelEntrance)
@@ -14,11 +15,19 @@ public class State : Singleton<State>
         LevelEntrance = levelEntrance;
     }
 
-    public void AddToShineyCount(int count)
+    public void AddToPlayerShinyCount(int count)
     {
-        ShinyCount += count;
+        PlayerShinyCount += count;
     }
 
+    public int CashInShinyItem()
+    {
+        PlayerShinyCount -= 1;
+        StoredShinyCount += 1;
+        return StoredShinyCount;
+    }
+
+    //TODO: Figure out a more generic way to determining if all our coroutines and shit are done
     public void AddToImportantSequences(Sequence seq)
     {
         ImportantSequences.Add(seq);

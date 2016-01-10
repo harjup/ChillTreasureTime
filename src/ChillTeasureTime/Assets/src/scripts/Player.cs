@@ -1,18 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
     private Control _control;
-    
+
+    private bool _isIntro;
+
+    private Action setMovingGui;
+
 
     void Start()
     {
+        setMovingGui = () =>
+        {
+            if (_isIntro)
+            {
+                _isIntro = false;
+                GuiCanvas.Instance.FadeTitleCard();
+            }
+        };
+
+        _isIntro = true;
         _control = GetComponent<Control>();
+        _control.MovementCallbacks.Add(setMovingGui);
         PutPlayerInCorrectStartSpot();
     }
 

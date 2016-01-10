@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ public class Control : MonoBehaviour
     public List<Signpost> CurrentExaminables = new List<Signpost>();
 
     private bool _disabled;
+
+    public readonly List<Action> MovementCallbacks = new List<Action>();
 
     public bool Disabled
     {
@@ -71,5 +74,13 @@ public class Control : MonoBehaviour
 	    }
 
         _rigidbody.velocity = new Vector3(xVel, yVel, zVel);
+
+	    if (_rigidbody.velocity.SetY(0f).magnitude > .01f)
+	    {
+	        foreach (var cb in MovementCallbacks)
+	        {
+	            cb();
+	        }
+	    }
 	}
 }

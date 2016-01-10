@@ -20,6 +20,6 @@ public class OverworldUi : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-        _shinyText.text = string.Format(_shinyTextTemplate, _state.ShinyCount);
+        _shinyText.text = string.Format(_shinyTextTemplate, _state.PlayerShinyCount);
 	}
 }

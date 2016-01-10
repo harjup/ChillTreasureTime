@@ -4,9 +4,11 @@ using System.Collections;
 public class GuiCanvas : Singleton<GuiCanvas>
 {
     private GameObject OverworldUi;
-    
+    private GameObject TitleCard;
+
     private TalkingUi _talkingUi;
     public GameObject TalkingUiObject;
+    
 
     public TalkingUi TalkingUi
     {
@@ -24,8 +26,22 @@ public class GuiCanvas : Singleton<GuiCanvas>
     {
         OverworldUi = transform.FindChild("OverworldUi").gameObject;
         TalkingUiObject = transform.FindChild("TalkingUi").gameObject;
+        TitleCard = transform.FindChild("TitleCard").gameObject;
 
-        EnableOverworldUi();
+        EnableTitleCard();
+
+        //EnableOverworldUi();
+    }
+
+    private void EnableTitleCard()
+    {
+        DisableAll();
+        TitleCard.SetActive(true);
+    }
+
+    public void FadeTitleCard()
+    {
+        TitleCard.SetActive(false);
     }
 
     public void EnableTalking()
@@ -42,6 +58,7 @@ public class GuiCanvas : Singleton<GuiCanvas>
 
     public void DisableAll()
     {
+        TitleCard.SetActive(false);
         OverworldUi.SetActive(false);
         TalkingUiObject.SetActive(false);
     }

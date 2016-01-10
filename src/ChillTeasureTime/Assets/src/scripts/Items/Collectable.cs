@@ -14,26 +14,52 @@ public class Collectable : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        // Do animation
-        GetComponent<Collider>().enabled = false;
 
-        var seq = DOTween
+
+        var player = other.GetComponent<Player>();
+        if (player != null)
+        {
+            // Do animation
+            GetComponent<Collider>().enabled = false;
+            StartCoroutine(GoToPlayerSack(player));
+
+
+        }
+    }
+
+    private IEnumerator GoToPlayerSack(Player player)
+    {
+        yield return DOTween
             .Sequence()
-            .Append(transform.DOLocalMoveY(3f, 1f).SetEase(Ease.Linear))
-            .Append(transform.transform.DOMoveY(20, .5f).SetEase(Ease.Linear))
-            .OnComplete(() =>
+            .Append(transform.DOLocalMoveY(3f, .5f).SetEase(Ease.Linear))
+            .WaitForCompletion();
+
+        transform.DOScale(transform.localScale / 4f, .25f).SetEase(Ease.OutQuad);
+
+        var timeElapsed = 0f;
+        while ((transform.position - player.transform.position).magnitude > 1f)
+        {
+            transform.position = iTween.Vector3Update(transform.position, player.transform.position, 10f);
+            timeElapsed += Time.smoothDeltaTime;
+
+            if (timeElapsed > 2f)
             {
-                // Increment the shinies 
-                State.Instance.AddToShineyCount(1);
-                if (_callBack != null)
-                {
-                    _callBack();
-                }
+                break;
+            }
 
-                // Kill self
-                Destroy(gameObject);
-            });
+            yield return new WaitForEndOfFrame();
+        }        
 
-        State.Instance.AddToImportantSequences(seq);
+        // Increment the shinies 
+        State.Instance.AddToPlayerShinyCount(1);
+        if (_callBack != null)
+        {
+            _callBack();
+        }
+
+        // Kill self
+        Destroy(gameObject);
+
+        //TODO: Callback to say it's ok to level load
     }
 }
