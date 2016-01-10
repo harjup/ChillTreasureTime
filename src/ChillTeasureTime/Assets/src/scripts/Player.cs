@@ -39,7 +39,8 @@ public class Player : MonoBehaviour
         // Set animation to walking
         // Move toward walkTarget
         _control.Disabled = true;
-        
+
+        SceneFadeInOut.Instance.EndScene();
 
         transform
             .DOMove(walkTarget.position, .5f)
