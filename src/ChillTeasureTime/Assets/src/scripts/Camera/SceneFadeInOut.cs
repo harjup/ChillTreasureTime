@@ -18,7 +18,7 @@ public class SceneFadeInOut : Singleton<SceneFadeInOut>
         StartScene();
     }
 
-    IEnumerator FadeToClear()
+    public IEnumerator FadeToClear()
     {
         yield return new WaitForSeconds(.5f);
 
@@ -32,7 +32,7 @@ public class SceneFadeInOut : Singleton<SceneFadeInOut>
         _image.color = Color.clear;
     }
 
-    IEnumerator FadeToBlack()
+    public IEnumerator FadeToBlack()
     {
         while (_image.color.a <= 0.95f)
         {
@@ -44,14 +44,14 @@ public class SceneFadeInOut : Singleton<SceneFadeInOut>
         _image.color = Color.black;
     }
 
-    public void StartScene()
+    public Coroutine StartScene()
     {
         // Fade the texture to clear.
-        StartCoroutine(FadeToClear());
+        return StartCoroutine(FadeToClear());
     }
 
-    public void EndScene()
+    public Coroutine EndScene()
     {
-        StartCoroutine(FadeToBlack());
+        return StartCoroutine(FadeToBlack());
     }
 }

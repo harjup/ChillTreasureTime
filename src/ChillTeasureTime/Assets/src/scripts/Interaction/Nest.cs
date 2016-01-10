@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Random = UnityEngine.Random;
 
 public class Nest : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class Nest : MonoBehaviour
 
     public GameObject CanDepositObject;
 
+    public List<int> Milestones = new List<int> { 1, 3, 5 };
+
     public void Start()
     {
         var shinyBitsTransform = transform
@@ -26,7 +30,6 @@ public class Nest : MonoBehaviour
         {
             ShinyBits.Add(t.gameObject);
         }
-
 
         UpdateShinyDisplay();
 
@@ -73,6 +76,8 @@ public class Nest : MonoBehaviour
         // Amount to bank
         int amountToBank = State.Instance.PlayerShinyCount;
 
+        var seqs = new List<YieldInstruction>();
+
         while (amountToBank > 0)
         {
             // Create collectable above player
@@ -80,7 +85,7 @@ public class Nest : MonoBehaviour
 
             var bit = Instantiate(ShiningBitDisplay, player.transform.position, Quaternion.identity) as GameObject;
 
-            DOTween.Sequence()
+            var seq = DOTween.Sequence()
                 .Append(bit.transform.DOMove(transform.position.SetY(transform.position.y + 5f), .5f))
                 .Append(bit.transform.DOMove(transform.position, .5f))
                 .OnComplete(() =>
@@ -93,8 +98,35 @@ public class Nest : MonoBehaviour
 
             amountToBank--;
 
+            seqs.Add(seq);
+
             yield return new WaitForSeconds(Random.Range(0f, .2f));
         }
+
+        foreach (var y in seqs)
+        {
+            yield return y;
+        }
+
+
+        var mileStones = Milestones.Where(i => i <= State.Instance.StoredShinyCount).ToList();
+        foreach (var mileStone in mileStones)
+        {
+            Debug.Log(mileStone);
+            Milestones.Remove(mileStone);
+
+            // Fade Out
+            // Spawn birds for mileStone
+            yield return SceneFadeInOut.Instance.EndScene();
+
+            Debug.Log("SPAWN BIRD " + mileStone);
+            yield return new WaitForSeconds(.25f);
+
+            yield return SceneFadeInOut.Instance.StartScene();
+            // Fade In
+        }
+
+
 
         // Shoot all the collectables into the nest
         yield return null;
