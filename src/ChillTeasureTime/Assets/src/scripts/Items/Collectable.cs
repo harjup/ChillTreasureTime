@@ -1,9 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using DG.Tweening;
 
-public class Collectable : MonoBehaviour 
+public class Collectable : MonoBehaviour
 {
+    private Action _callBack;
+
+    public void SetCallback(Action cb)
+    {
+        _callBack = cb;
+    }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -18,6 +25,12 @@ public class Collectable : MonoBehaviour
             {
                 // Increment the shinies 
                 State.Instance.AddToShineyCount(1);
+
+                if (_callBack != null)
+                {
+                    _callBack();
+                }
+
                 // Kill self
                 Destroy(gameObject);
             });
