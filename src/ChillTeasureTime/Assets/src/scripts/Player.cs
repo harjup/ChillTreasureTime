@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using DG.Tweening;
 
 public class Player : MonoBehaviour
@@ -46,10 +48,20 @@ public class Player : MonoBehaviour
 
         transform
             .DOMove(walkTarget.position, .5f)
-            .OnComplete(() => { LevelLoader.Instance.LoadLevel(level); });
+            .OnComplete(() => { StartCoroutine(LoadLevelAfterImportantEventsAreDone(level)); });
         // Start a timer
         // Load level once camera fade occurs
     }
+
+    private IEnumerator LoadLevelAfterImportantEventsAreDone(LevelEntrance level)
+    {
+        while (!State.Instance.AllImportantSequencesAreDone())
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        LevelLoader.Instance.LoadLevel(level);
+    } 
 
     public void StartLevelTransitionIn(PlayerStart start)
     {

@@ -17,7 +17,7 @@ public class Collectable : MonoBehaviour
         // Do animation
         GetComponent<Collider>().enabled = false;
 
-        DOTween
+        var seq = DOTween
             .Sequence()
             .Append(transform.DOLocalMoveY(3f, 1f).SetEase(Ease.Linear))
             .Append(transform.transform.DOMoveY(20, .5f).SetEase(Ease.Linear))
@@ -25,7 +25,6 @@ public class Collectable : MonoBehaviour
             {
                 // Increment the shinies 
                 State.Instance.AddToShineyCount(1);
-
                 if (_callBack != null)
                 {
                     _callBack();
@@ -34,5 +33,7 @@ public class Collectable : MonoBehaviour
                 // Kill self
                 Destroy(gameObject);
             });
+
+        State.Instance.AddToImportantSequences(seq);
     }
 }

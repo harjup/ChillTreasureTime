@@ -5,16 +5,12 @@ using System.Collections.Generic;
 
 public class Signpost : MonoBehaviour
 {
+    public string TextId;
     private GuiCanvas _guiCanvas;
     private TalkingUi _talkingUi;
     private GameObject QMark;
 
-    private List<Line> _lines = new List<Line>()
-    {
-        new Line("Signpost", "I AM A BEAUTIFUL SIGNPOST THAT IS ALL"),
-        new Line("Signpost", "ALSO, I AM MADE OUT OF WOOD"),
-        new Line("Signpost", "ALRIGHT, I HAD A LITTLE EXTRA")
-    };
+    public List<Line> Lines;
 
     public void Start()
     {
@@ -23,6 +19,8 @@ public class Signpost : MonoBehaviour
 
         QMark = transform.FindChild("?").gameObject;
         QMark.SetActive(false);
+
+        Lines = TextLoader.Instance.GetLinesById(TextId);
     }
 
     public IEnumerator DisplayText(Action doneCallback)
@@ -30,7 +28,7 @@ public class Signpost : MonoBehaviour
         QMark.SetActive(false);
         _guiCanvas.EnableTalking();
 
-        foreach (var line in _lines)
+        foreach (var line in Lines)
         {
             yield return StartCoroutine(_talkingUi.TextCrawl(line));
         }

@@ -15,6 +15,7 @@ public class GenerateGuids : ScriptableWizard
             if (guidObj != null)
             {
                 guidObj.Guid = GuidToBase64(Guid.NewGuid());
+                EditorUtility.SetDirty(guidObj);
             }
         }
     }
