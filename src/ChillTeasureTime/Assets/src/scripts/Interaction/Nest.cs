@@ -9,7 +9,10 @@ using Random = UnityEngine.Random;
 public class Nest : MonoBehaviour
 {
     public string TextId;
+
     private GuiCanvas _guiCanvas;
+
+    private IEnumerator _cashInRoutine;
 
     public GameObject ShiningBitDisplay;
 
@@ -17,7 +20,10 @@ public class Nest : MonoBehaviour
 
     public GameObject CanDepositObject;
 
-    public List<int> Milestones = new List<int> { 1, 3, 5 };
+    public List<Milestone> Milestones = new List<Milestone>
+    {
+        new Milestone(1, "1")
+    };
 
     public void Start()
     {
@@ -61,15 +67,17 @@ public class Nest : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void OnCollisionStay(Collision collision)
     {
-        var player = other.GetComponent<Player>();
-        if (player != null)
+        var player = collision.gameObject.GetComponent<Player>();
+        if (player != null && _cashInRoutine == null)
         {
-            StartCoroutine(CashInAnim(player));
-            Debug.Log("Enter " + other);
+            _cashInRoutine = CashInAnim(player);
+            StartCoroutine(_cashInRoutine);
         }
     }
+
+
 
     private IEnumerator CashInAnim(Player player)
     {
@@ -109,7 +117,7 @@ public class Nest : MonoBehaviour
         }
 
 
-        var mileStones = Milestones.Where(i => i <= State.Instance.StoredShinyCount).ToList();
+        var mileStones = Milestones.Where(m => m.Amount <= State.Instance.StoredShinyCount).ToList();
         foreach (var mileStone in mileStones)
         {
             Debug.Log(mileStone);
@@ -119,7 +127,14 @@ public class Nest : MonoBehaviour
             // Spawn birds for mileStone
             yield return SceneFadeInOut.Instance.EndScene();
 
-            Debug.Log("SPAWN BIRD " + mileStone);
+            var birdSpawn = FindObjectsOfType<BirdSpawn>().FirstOrDefault(b => b.Id == mileStone.Id);
+            if (birdSpawn == null)
+            {
+                Debug.LogError("Expected BirdSpawn With Id '" + mileStone.Amount +"'");
+            }
+
+            birdSpawn.SpawnBird();
+
             yield return new WaitForSeconds(.25f);
 
             yield return SceneFadeInOut.Instance.StartScene();
@@ -127,7 +142,7 @@ public class Nest : MonoBehaviour
         }
 
 
-
+        _cashInRoutine = null;
         // Shoot all the collectables into the nest
         yield return null;
     }

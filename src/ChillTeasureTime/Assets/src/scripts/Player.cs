@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
         // Pull info off the door or tab for what our animation should be
     }
 
-    public void AddExaminable(Signpost signpost)
+    public void AddExaminable(IExaminable signpost)
     {
         if (!_control.CurrentExaminables.Contains(signpost))
         {
@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void RemoveExaminable(Signpost signpost)
+    public void RemoveExaminable(IExaminable signpost)
     {
         if (_control.CurrentExaminables.Contains(signpost))
         {

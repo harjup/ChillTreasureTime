@@ -11,7 +11,6 @@ public class ItemSpawn : MonoBehaviour
 
     public GameObject Shiney;
 
-
 	// Use this for initialization
 	void Start ()
 	{

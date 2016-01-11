@@ -3,7 +3,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Signpost : MonoBehaviour, IExaminable
+
+public class Bird : MonoBehaviour, IExaminable
 {
     public string TextId;
     private GuiCanvas _guiCanvas;
@@ -20,7 +21,13 @@ public class Signpost : MonoBehaviour, IExaminable
         QMark = transform.FindChild("?").gameObject;
         QMark.SetActive(false);
 
-        Lines = TextLoader.Instance.GetLinesById(TextId);
+        Lines = new List<Line>
+        {
+            new Line("Tiny Bird", "Nice Bauble You Have Here."),
+            new Line("Tiny Bird", "You know, as you gain shiny stuff, you're going to attract more attention."),
+            new Line("Tiny Bird", "To do that, you'll need some tricks. Here's WING FLAP."),
+            new Line("Tiny Bird", "Try it on me. If you can impress me, I'll even join you!"),
+        };
     }
 
     public IEnumerator StartSequence(Action doneCallback)
@@ -32,8 +39,11 @@ public class Signpost : MonoBehaviour, IExaminable
         {
             yield return StartCoroutine(_talkingUi.TextCrawl(line));
         }
+
+        // TRANSITION INTO FIGHT INSTANCE
+
+        Debug.Log("TRANSITION INTO FIGHT INSTANCE");
         
-        _guiCanvas.EnableOverworldUi();
         doneCallback();
         QMark.SetActive(true);
     }

@@ -10,7 +10,7 @@ public class Control : MonoBehaviour
     private Rigidbody _rigidbody;
     public float BaseSpeed = 8;
 
-    public List<Signpost> CurrentExaminables = new List<Signpost>();
+    public List<IExaminable> CurrentExaminables = new List<IExaminable>();
 
     private bool _disabled;
 
@@ -51,7 +51,7 @@ public class Control : MonoBehaviour
             {
                 // TODO: Take closest
                 var first = CurrentExaminables.First();                
-                StartCoroutine(first.DisplayText(() =>
+                StartCoroutine(first.StartSequence(() =>
                 {
                     Disabled = false;
                 }));
