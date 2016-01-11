@@ -10,6 +10,8 @@ public class Control : MonoBehaviour
     private Rigidbody _rigidbody;
     public float BaseSpeed = 8;
 
+    private Animator _animator;
+
     public List<IExaminable> CurrentExaminables = new List<IExaminable>();
 
     private bool _disabled;
@@ -34,6 +36,7 @@ public class Control : MonoBehaviour
 	{
 	    _rigidbody = GetComponent<Rigidbody>();
 	    _collider = GetComponent<Collider>();
+	    _animator = GetComponentInChildren<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -81,6 +84,22 @@ public class Control : MonoBehaviour
 	        {
 	            cb();
 	        }
+
+	        _animator.SetTrigger("ToWalk");
 	    }
+	    else
+	    {
+            _animator.SetTrigger("ToIdle");
+	    }
+
+	    if (xVel > 0)
+	    {
+	        _animator.transform.localScale = _animator.transform.localScale.SetX(1);
+	    }
+	    else if (xVel < 0)
+	    {
+            _animator.transform.localScale = _animator.transform.localScale.SetX(-1);
+	    }
+
 	}
 }
