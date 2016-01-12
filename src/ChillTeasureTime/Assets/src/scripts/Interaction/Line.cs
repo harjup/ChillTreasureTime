@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Line
+
+public class Direction
+{
+    
+}
+
+public class Line : Direction
 {
     public Line(string name, string content)
     {
@@ -11,5 +17,10 @@ public class Line
 
     public string Name { get; set; }
     public string Content { get; set; }
+    
+}
+
+public class LoadFight : Direction
+{
     
 }

@@ -28,6 +28,25 @@ public class CameraMove : MonoBehaviour
         Player = FindObjectOfType<Player>().gameObject;
     }
 
+    public void OnLevelWasLoaded(int level)
+    {
+        if (Application.loadedLevelName == "Fight")
+        {
+            GetComponent<Camera>().enabled = false;
+            GetComponent<AudioListener>().enabled = false;
+            GetComponent<GUILayer>().enabled = false;
+            GetComponent<FlareLayer>().enabled = false;
+        }
+        else
+        {
+            GetComponent<Camera>().enabled = true;
+            GetComponent<AudioListener>().enabled = true;
+            GetComponent<GUILayer>().enabled = true;
+            GetComponent<FlareLayer>().enabled = true;
+        }
+        
+    }
+
 	private void FixedUpdate () 
     {
 	    if (Pause)

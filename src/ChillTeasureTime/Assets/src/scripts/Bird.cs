@@ -11,7 +11,7 @@ public class Bird : MonoBehaviour, IExaminable
     private TalkingUi _talkingUi;
     private GameObject QMark;
 
-    public List<Line> Lines;
+    public List<Direction> Directions;
 
     public void Start()
     {
@@ -21,12 +21,13 @@ public class Bird : MonoBehaviour, IExaminable
         QMark = transform.FindChild("?").gameObject;
         QMark.SetActive(false);
 
-        Lines = new List<Line>
+        Directions = new List<Direction>
         {
             new Line("Tiny Bird", "Nice Bauble You Have Here."),
             new Line("Tiny Bird", "You know, as you gain shiny stuff, you're going to attract more attention."),
             new Line("Tiny Bird", "To do that, you'll need some tricks. Here's WING FLAP."),
             new Line("Tiny Bird", "Try it on me. If you can impress me, I'll even join you!"),
+            new LoadFight()
         };
     }
 
@@ -35,15 +36,27 @@ public class Bird : MonoBehaviour, IExaminable
         QMark.SetActive(false);
         _guiCanvas.EnableTalking();
 
-        foreach (var line in Lines)
+        foreach (var direction in Directions)
         {
-            yield return StartCoroutine(_talkingUi.TextCrawl(line));
+            if (direction is Line)
+            {
+                yield return StartCoroutine(_talkingUi.TextCrawl(direction as Line));
+            }
+
+            if (direction is LoadFight)
+            {
+                doneCallback();
+
+                _guiCanvas.DisableAll();
+
+                SceneFadeInOut.Instance.EndScene();
+
+                yield return new WaitForSeconds(.5f);
+
+                LevelLoader.Instance.LoadFight();
+            }
         }
 
-        // TRANSITION INTO FIGHT INSTANCE
-
-        Debug.Log("TRANSITION INTO FIGHT INSTANCE");
-        
         doneCallback();
         QMark.SetActive(true);
     }

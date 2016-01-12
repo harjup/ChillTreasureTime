@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
@@ -32,6 +33,8 @@ public class Player : MonoBehaviour
 
     public void OnLevelWasLoaded(int level)
     {
+        _control.CurrentExaminables = new List<IExaminable>();
+
         PutPlayerInCorrectStartSpot();
     }
 
@@ -44,6 +47,16 @@ public class Player : MonoBehaviour
             Debug.LogError("Start Spot not found, resorting to default");
             startSpot = FindObjectsOfType<PlayerStart>().FirstOrDefault(p => p.LevelEntrance == LevelEntrance.Start);
         }
+
+        if (Application.loadedLevelName == "Fight")
+        {
+            _control.Disabled = true;
+        }
+        else
+        {
+            _control.Disabled = false;
+        }
+
 
         StartLevelTransitionIn(startSpot);
     }

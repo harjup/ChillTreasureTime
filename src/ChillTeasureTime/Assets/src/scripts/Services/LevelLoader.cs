@@ -34,4 +34,9 @@ public class LevelLoader : Singleton<LevelLoader>
                 break;
         }
     }
+
+    public void LoadFight()
+    {
+        Application.LoadLevel("Fight");
+    }
 }
