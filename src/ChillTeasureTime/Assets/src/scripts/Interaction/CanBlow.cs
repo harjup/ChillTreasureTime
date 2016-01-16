@@ -28,14 +28,24 @@ public class CanInteract : MonoBehaviour
 
 public class CanBlow : CanInteract
 {
+    public GameObject ShineySpawnLocation;
+    public GameObject ShinyToSpawn;
+
     void Start()
     {
+        ShineySpawnLocation = transform.Find("ShinySpawn").gameObject;
+
         InterestedHitboxType = HitboxType.PlayerWing;
     }
 
     public override IEnumerator DoSequence(Action action)
     {
         transform.DOShakePosition(.25f, Vector3.one, 40);
+        var go = Instantiate(ShinyToSpawn, ShineySpawnLocation.transform.position, Quaternion.identity) as GameObject;
+
+        var shiny = go.GetComponent<Collectable>();
+        shiny.SetSpeed(new Vector3(1f, 1f, 0f));
+
         yield return null;
     }
 }

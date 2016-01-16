@@ -69,4 +69,9 @@ public class Collectable : MonoBehaviour
 
         //TODO: Callback to say it's ok to level load
     }
+
+    public void SetSpeed(Vector3 vector3)
+    {
+        GetComponent<Rigidbody>().velocity = vector3;
+    }
 }
