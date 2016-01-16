@@ -40,6 +40,8 @@ public class Control : MonoBehaviour
         }
     }
 
+    public List<CanInteract> CurrentInteractables = new List<CanInteract>();
+
     // Use this for initialization
 	void Start ()
 	{
@@ -61,7 +63,7 @@ public class Control : MonoBehaviour
             if (CurrentExaminables.Any())
             {
                 // TODO: Take closest
-                var first = CurrentExaminables.First();                
+                var first = CurrentExaminables.First();
                 StartCoroutine(first.StartSequence(() =>
                 {
                     Disabled = false;
@@ -71,8 +73,27 @@ public class Control : MonoBehaviour
                 _rigidbody.velocity = Vector3.zero;
                 return;
             }
-            // Start text mode
+            else
+            {
+                _animator.SetTrigger("ToWingFlap");
+                var first = CurrentInteractables.FirstOrDefault(i => i is CanBlow);
+                if (first != null)
+                {
+                    StartCoroutine(first.DoSequence(() => {}));
+                }
+                
+                // Play wing flap
+                // Target Do animation / spawning
+            }
         }
+
+	    if (_animator.GetCurrentAnimatorStateInfo(0).IsName("WingFlap"))
+	    {
+            _rigidbody.velocity = _rigidbody.velocity.SetX(0f).SetZ(0f);
+	        return;
+	    }
+
+
 
         var xVel = Input.GetAxisRaw("Horizontal") * BaseSpeed;
         var zVel = Input.GetAxisRaw("Vertical") * BaseSpeed;

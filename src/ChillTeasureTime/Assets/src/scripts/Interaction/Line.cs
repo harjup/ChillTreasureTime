@@ -2,11 +2,6 @@
 using System.Collections;
 
 
-public class Direction
-{
-    
-}
-
 public class Line : Direction
 {
     public Line(string name, string content)
@@ -18,6 +13,13 @@ public class Line : Direction
     public string Name { get; set; }
     public string Content { get; set; }
     
+}
+
+public class GetWingFlap : Line
+{
+    public GetWingFlap() : base("", "Got Wing Flap!")
+    {
+    }
 }
 
 public class LoadFight : Direction

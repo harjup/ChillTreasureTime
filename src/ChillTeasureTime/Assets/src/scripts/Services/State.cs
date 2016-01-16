@@ -3,9 +3,17 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
+public enum Power
+{
+    Undefined, 
+    WingFlap,
+    Peck
+}
+
 public class State : Singleton<State>
 {
     public bool IsIntro = true;
+    public List<Power> PowerList = new List<Power>();
     public bool FirstShinyCollected = false;
     public LevelEntrance LevelEntrance;
 
@@ -44,5 +52,13 @@ public class State : Singleton<State>
     public bool AllImportantSequencesAreDone()
     {
         return ImportantSequences.All(i => !i.IsPlaying());
+    }
+
+    public void UnlockWingFlap()
+    {
+        if (!PowerList.Contains(Power.WingFlap))
+        {
+            PowerList.Add(Power.WingFlap);
+        }
     }
 }

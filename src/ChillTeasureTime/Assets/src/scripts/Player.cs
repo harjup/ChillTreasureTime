@@ -140,4 +140,21 @@ public class Player : MonoBehaviour
 
         return _control;
     }
+
+    public void AddInteractable(CanInteract canInteract)
+    {
+        if (!_control.CurrentInteractables.Contains(canInteract))
+        {
+            _control.CurrentInteractables.Add(canInteract);
+        }
+
+    }
+
+    public void RemoveInteractable(CanInteract canInteract)
+    {
+        if (!_control.CurrentInteractables.Contains(canInteract))
+        {
+            _control.CurrentInteractables.Add(canInteract);
+        }
+    }
 }
