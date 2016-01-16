@@ -40,29 +40,14 @@ public class ItemSpawn : MonoBehaviour
             CollectedList.Add(Guid);
             if (ShineyType == CollectableType.Good && !State.Instance.FirstShinyCollected)
             {
-                StartCoroutine(ShowFirstPickUpMessage());
+                var lines = new List<Line>
+                {
+                    new Line("", "Wow! A shining coin! I should find a safe place to stash this.")
+                };
+
+                StartCoroutine(DialogService.Instance.DisplayLines(lines));
+                State.Instance.FirstShinyCollected = true;
             }
         });
-    }
-
-    private IEnumerator ShowFirstPickUpMessage()
-    {
-        FindObjectOfType<Player>().DisableControl();
-        _guiCanvas.EnableTalking();
-
-        var Lines = new List<Line>
-        {
-            new Line("", "Wow! A shining coin! I should find a safe place to stash this.")
-        };
-
-        foreach (var line in Lines)
-        {
-            yield return StartCoroutine(_guiCanvas.TalkingUi.TextCrawl(line));
-        }
-
-        _guiCanvas.EnableOverworldUi();
-
-        FindObjectOfType<Player>().EnableControl();
-        State.Instance.FirstShinyCollected = true;
     }
 }

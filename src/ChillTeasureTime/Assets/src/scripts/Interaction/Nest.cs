@@ -22,7 +22,9 @@ public class Nest : MonoBehaviour
 
     public List<Milestone> Milestones = new List<Milestone>
     {
-        new Milestone(1, "1")
+        new Milestone(1, "1", new List<Line>{new Line("", "Some nearby birds were attracted by your newfound riches.")}),
+        new Milestone(2, "2", new List<Line>{new Line("", "Here is another message for two shiny items")}),
+        new Milestone(3, "3", new List<Line>{new Line("", "This message is for three.")})
     };
 
     public void Start()
@@ -44,7 +46,7 @@ public class Nest : MonoBehaviour
 
     public void Update()
     {
-        CanDepositObject.SetActive(State.Instance.PlayerShinyCount > 0);
+        CanDepositObject.SetActive(State.Instance.PlayerShinyCount[CollectableType.Good] > 0);
     }
 
     public void UpdateShinyDisplay()
@@ -82,7 +84,7 @@ public class Nest : MonoBehaviour
     private IEnumerator CashInAnim(Player player)
     {
         // Amount to bank
-        int amountToBank = State.Instance.PlayerShinyCount;
+        int amountToBank = State.Instance.PlayerShinyCount[CollectableType.Good];
 
         var seqs = new List<YieldInstruction>();
 
@@ -118,28 +120,38 @@ public class Nest : MonoBehaviour
 
 
         var mileStones = Milestones.Where(m => m.Amount <= State.Instance.StoredShinyCount).ToList();
-        foreach (var mileStone in mileStones)
-        {
-            Debug.Log(mileStone);
-            Milestones.Remove(mileStone);
 
+        if (mileStones.Any())
+        {
             // Fade Out
             // Spawn birds for mileStone
             yield return SceneFadeInOut.Instance.EndScene();
 
-            var birdSpawn = FindObjectsOfType<BirdSpawn>().FirstOrDefault(b => b.Id == mileStone.Id);
-            if (birdSpawn == null)
+            foreach (var mileStone in mileStones)
             {
-                Debug.LogError("Expected BirdSpawn With Id '" + mileStone.Amount +"'");
-            }
+                Milestones.Remove(mileStone);
 
-            birdSpawn.SpawnBird();
+                var birdSpawn = FindObjectsOfType<BirdSpawn>().FirstOrDefault(b => b.Id == mileStone.Id);
+                if (birdSpawn == null)
+                {
+                    Debug.LogError("Expected BirdSpawn With Id '" + mileStone.Amount + "'");
+                }
+
+                birdSpawn.SpawnBird();
+
+                if (mileStone.Lines.Any())
+                {
+                    yield return StartCoroutine(DialogService.Instance.DisplayLines(mileStone.Lines));
+                }
+            }
 
             yield return new WaitForSeconds(.25f);
 
             yield return SceneFadeInOut.Instance.StartScene();
             // Fade In
         }
+
+        
 
 
         _cashInRoutine = null;

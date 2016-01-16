@@ -26,7 +26,8 @@ public class Bootstrapper : MonoBehaviour
     private List<Type> SimpleServices = new List<Type>
     {
         typeof(LevelLoader),
-        typeof(TextLoader)
+        typeof(TextLoader),
+        typeof(DialogService)
     };
 
 

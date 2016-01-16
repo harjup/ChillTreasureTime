@@ -8,7 +8,13 @@ public class State : Singleton<State>
     public bool IsIntro = true;
     public bool FirstShinyCollected = false;
     public LevelEntrance LevelEntrance;
-    public int PlayerShinyCount;
+
+    public Dictionary<CollectableType, int> PlayerShinyCount = new Dictionary<CollectableType, int>
+    {
+        {CollectableType.Good, 0},
+        {CollectableType.Worthless, 0}
+    };
+
     public int StoredShinyCount;
     public readonly List<Sequence> ImportantSequences = new List<Sequence>();
 
@@ -17,14 +23,14 @@ public class State : Singleton<State>
         LevelEntrance = levelEntrance;
     }
 
-    public void AddToPlayerShinyCount(int count)
+    public void AddToPlayerItemCount(int count, CollectableType type)
     {
-        PlayerShinyCount += count;
+        PlayerShinyCount[type] += count;
     }
 
     public int CashInShinyItem()
     {
-        PlayerShinyCount -= 1;
+        PlayerShinyCount[CollectableType.Good] -= 1;
         StoredShinyCount += 1;
         return StoredShinyCount;
     }

@@ -7,7 +7,7 @@ public enum CollectableType
 {
     Unknown,
     Good,
-    Useless
+    Worthless
 }
 
 public class Collectable : MonoBehaviour
@@ -57,8 +57,8 @@ public class Collectable : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        // Increment the shinies 
-        State.Instance.AddToPlayerShinyCount(1);
+        State.Instance.AddToPlayerItemCount(1, MyType);
+        
         if (_callBack != null)
         {
             _callBack();
