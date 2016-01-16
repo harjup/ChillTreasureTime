@@ -6,6 +6,7 @@ using UnityEngine;
 public class State : Singleton<State>
 {
     public bool IsIntro = true;
+    public bool FirstShinyCollected = false;
     public LevelEntrance LevelEntrance;
     public int PlayerShinyCount;
     public int StoredShinyCount;

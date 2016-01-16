@@ -35,6 +35,8 @@ public class Control : MonoBehaviour
             }
 
             _collider.enabled = !_disabled;
+
+            _rigidbody.velocity = Vector3.zero;
         }
     }
 

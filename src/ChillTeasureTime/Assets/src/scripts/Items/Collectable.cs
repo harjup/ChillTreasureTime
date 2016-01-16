@@ -3,9 +3,20 @@ using UnityEngine;
 using System.Collections;
 using DG.Tweening;
 
+public enum CollectableType
+{
+    Unknown,
+    Good,
+    Useless
+}
+
 public class Collectable : MonoBehaviour
 {
     private Action _callBack;
+
+    public CollectableType MyType;
+
+    public static bool ShineyHasBeenCollected = false;
 
     public void SetCallback(Action cb)
     {
@@ -14,16 +25,12 @@ public class Collectable : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-
-
         var player = other.GetComponent<Player>();
         if (player != null)
         {
             // Do animation
             GetComponent<Collider>().enabled = false;
             StartCoroutine(GoToPlayerSack(player));
-
-
         }
     }
 
@@ -48,7 +55,7 @@ public class Collectable : MonoBehaviour
             }
 
             yield return new WaitForEndOfFrame();
-        }        
+        }
 
         // Increment the shinies 
         State.Instance.AddToPlayerShinyCount(1);
