@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class GuiCanvas : Singleton<GuiCanvas>
 {
     private GameObject OverworldUi;
-    private GameObject TitleCard;
+    private GameObject IntroUi;
 
     private TalkingUi _talkingUi;
     public GameObject TalkingUiObject;
@@ -26,7 +28,7 @@ public class GuiCanvas : Singleton<GuiCanvas>
     {
         OverworldUi = transform.FindChild("OverworldUi").gameObject;
         TalkingUiObject = transform.FindChild("TalkingUi").gameObject;
-        TitleCard = transform.FindChild("TitleCard").gameObject;
+        IntroUi = transform.FindChild("IntroUi").gameObject;
 
         EnableTitleCard();
 
@@ -36,12 +38,12 @@ public class GuiCanvas : Singleton<GuiCanvas>
     private void EnableTitleCard()
     {
         DisableAll();
-        TitleCard.SetActive(true);
+        IntroUi.SetActive(true);
     }
 
     public void FadeTitleCard()
     {
-        TitleCard.SetActive(false);
+        IntroUi.SetActive(false);
     }
 
     public void EnableTalking()
@@ -58,8 +60,20 @@ public class GuiCanvas : Singleton<GuiCanvas>
 
     public void DisableAll()
     {
-        TitleCard.SetActive(false);
+        IntroUi.SetActive(false);
         OverworldUi.SetActive(false);
         TalkingUiObject.SetActive(false);
+    }
+
+    // Returns all the children of introUi
+    public List<GameObject> GetTitleCards()
+    {
+        // This is stupid
+        return transform
+            .FindChild("IntroUi")
+            .transform
+            .Cast<Transform>()
+            .Select(t => t.gameObject)
+            .ToList();
     }
 }

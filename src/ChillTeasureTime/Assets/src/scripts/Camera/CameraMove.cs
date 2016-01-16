@@ -82,4 +82,9 @@ public class CameraMove : MonoBehaviour
     {
         transform.localPosition = _initialPosition;
     }
+
+    public void SetCenterPosition(Vector3 position)
+    {
+        cameraCenter.transform.position = position;
+    }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class State : Singleton<State>
 {
+    public bool IsIntro = true;
     public LevelEntrance LevelEntrance;
     public int PlayerShinyCount;
     public int StoredShinyCount;

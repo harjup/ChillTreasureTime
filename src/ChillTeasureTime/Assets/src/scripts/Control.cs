@@ -14,6 +14,7 @@ public class Control : MonoBehaviour
 
     public List<IExaminable> CurrentExaminables = new List<IExaminable>();
 
+    [SerializeField]
     private bool _disabled;
 
     public readonly List<Action> MovementCallbacks = new List<Action>();
@@ -27,6 +28,12 @@ public class Control : MonoBehaviour
         set
         {
             _disabled = value;
+
+            if (_collider == null)
+            {
+                _collider = GetComponent<Collider>();
+            }
+
             _collider.enabled = !_disabled;
         }
     }
@@ -35,7 +42,6 @@ public class Control : MonoBehaviour
 	void Start ()
 	{
 	    _rigidbody = GetComponent<Rigidbody>();
-	    _collider = GetComponent<Collider>();
 	    _animator = GetComponentInChildren<Animator>();
 	}
 	

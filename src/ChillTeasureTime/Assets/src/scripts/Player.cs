@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
             startSpot = FindObjectsOfType<PlayerStart>().FirstOrDefault(p => p.LevelEntrance == LevelEntrance.Start);
         }
 
-        if (Application.loadedLevelName == "Fight")
+        if (Application.loadedLevelName == "Fight" || State.Instance.IsIntro)
         {
             _control.Disabled = true;
         }
@@ -119,5 +119,25 @@ public class Player : MonoBehaviour
         {
             _control.CurrentExaminables.Remove(signpost);
         }
+    }
+
+    public void DisableControl()
+    {
+        GetControlComponent().Disabled = true;
+    }
+
+    public void EnableControl()
+    {
+        GetControlComponent().Disabled = false;
+    }
+
+    private Control GetControlComponent()
+    {
+        if (_control == null)
+        {
+            _control = GetComponent<Control>();
+        }
+
+        return _control;
     }
 }
