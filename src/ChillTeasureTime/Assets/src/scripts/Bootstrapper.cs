@@ -27,7 +27,8 @@ public class Bootstrapper : MonoBehaviour
     {
         typeof(LevelLoader),
         typeof(TextLoader),
-        typeof(DialogService)
+        typeof(DialogService),
+        typeof(DirectionService)
     };
 
 

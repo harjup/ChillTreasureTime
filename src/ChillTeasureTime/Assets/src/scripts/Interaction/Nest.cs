@@ -22,6 +22,7 @@ public class Nest : MonoBehaviour
 
     public List<Milestone> Milestones = new List<Milestone>
     {
+        new Milestone(1, "0", new List<Line>{new Line("", "")}),
         new Milestone(1, "1", new List<Line>{new Line("", "Some nearby birds were attracted by your newfound riches.")}),
         new Milestone(2, "2", new List<Line>{new Line("", "Here is another message for two shiny items")}),
         new Milestone(3, "3", new List<Line>{new Line("", "This message is for three.")})

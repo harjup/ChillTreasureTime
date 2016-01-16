@@ -21,14 +21,7 @@ public class Bird : MonoBehaviour, IExaminable
         QMark = transform.FindChild("?").gameObject;
         QMark.SetActive(false);
 
-        Directions = new List<Direction>
-        {
-            new Line("Tiny Bird", "Nice Bauble You Have Here."),
-            new Line("Tiny Bird", "You know, as you gain shiny stuff, you're going to attract more attention."),
-            new Line("Tiny Bird", "To do that, you'll need some tricks. Here's WING FLAP."),
-            new Line("Tiny Bird", "Try it on me. If you can impress me, I'll even join you!"),
-            new LoadFight()
-        };
+        Directions = DirectionService.Instance.GetDirectionsById(TextId);
     }
 
     public IEnumerator StartSequence(Action doneCallback)
@@ -58,6 +51,7 @@ public class Bird : MonoBehaviour, IExaminable
         }
 
         doneCallback();
+        _guiCanvas.EnableOverworldUi();
         QMark.SetActive(true);
     }
 
