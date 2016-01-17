@@ -36,8 +36,10 @@ public class Bird : MonoBehaviour, IExaminable
                 yield return StartCoroutine(_talkingUi.TextCrawl(direction as Line));
             }
 
+            // Not currently used, won't get hit
             if (direction is GetWingFlap)
             {
+                Debug.Log("Unlock wing flap");
                 State.Instance.UnlockWingFlap();
             }
 

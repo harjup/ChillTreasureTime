@@ -20,6 +20,16 @@ public class CanInteract : MonoBehaviour
         }
     }
 
+    public void OnTriggerExit(Collider other)
+    {
+        var hitbox = other.GetComponent<Hitbox>();
+
+        if (hitbox != null && hitbox.Type == InterestedHitboxType)
+        {
+            hitbox.RemoveFromInteractables(this);
+        }
+    }
+
     public virtual IEnumerator DoSequence(Action action)
     {
         Debug.LogError("DoSequence is not overloaded on '" + gameObject.name + "', probably unintended");

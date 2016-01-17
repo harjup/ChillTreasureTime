@@ -22,7 +22,7 @@ public class Hitbox : MonoBehaviour
         _player.AddInteractable(canInteract);
     }
 
-    public void RemoveToInteractables(CanInteract canInteract)
+    public void RemoveFromInteractables(CanInteract canInteract)
     {
         _player.RemoveInteractable(canInteract);
     }

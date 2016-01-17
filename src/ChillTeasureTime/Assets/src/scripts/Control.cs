@@ -36,6 +36,12 @@ public class Control : MonoBehaviour
 
             _collider.enabled = !_disabled;
 
+            if (_rigidbody == null)
+            {
+                _rigidbody = GetComponent<Rigidbody>();
+            }
+
+
             _rigidbody.velocity = Vector3.zero;
         }
     }
@@ -73,7 +79,7 @@ public class Control : MonoBehaviour
                 _rigidbody.velocity = Vector3.zero;
                 return;
             }
-            else
+            else if (State.Instance.PowerList.Contains(Power.WingFlap))
             {
                 _animator.SetTrigger("ToWingFlap");
                 var firstBlow = CurrentInteractables.FirstOrDefault(i => i is CanBlow);

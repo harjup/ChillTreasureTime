@@ -7,17 +7,17 @@ public class Milestone
 
     public string Id { get; private set; }
 
-    public List<Line> Lines { get; private set; }
+    public List<Direction> Directions { get; private set; }
 
-    public Milestone(int amount, string id, List<Line> lines = null)
+    public Milestone(int amount, string id, List<Direction> directions = null)
     {
         Amount = amount;
         Id = id;
         
-        Lines = lines;
-        if (lines == null)
+        Directions = directions;
+        if (directions == null)
         {
-            Lines = new List<Line>();
+            Directions = new List<Direction>();
         }
     }
 
