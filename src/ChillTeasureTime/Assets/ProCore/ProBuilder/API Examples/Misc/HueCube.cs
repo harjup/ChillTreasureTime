@@ -1,5 +1,4 @@
-#define PROTOTYPE
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using ProBuilder2.Common;
 using System.Collections.Generic;
