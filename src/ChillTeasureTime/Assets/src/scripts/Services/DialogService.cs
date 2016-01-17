@@ -24,4 +24,24 @@ public class DialogService : Singleton<DialogService>
 
         _guiCanvas.EnableOverworldUi();
     }
+
+    public IEnumerator DisplayDirections(List<Direction> directions)
+    {
+        _guiCanvas.EnableTalking();
+
+        foreach (var direction in directions)
+        {
+            if (direction is Line)
+            {
+                yield return StartCoroutine(_guiCanvas.TalkingUi.TextCrawl(direction as Line));
+            }
+
+            if (direction is GetWingFlap)
+            {
+                State.Instance.UnlockWingFlap();
+            }
+        }
+ 
+        _guiCanvas.EnableOverworldUi();
+    }
 }

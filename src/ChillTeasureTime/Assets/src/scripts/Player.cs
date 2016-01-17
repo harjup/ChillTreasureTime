@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
             {
                 _isIntro = false;
                 GuiCanvas.Instance.FadeTitleCard();
+                MusicService.Instance.PlayBeachSnow();
             }
         };
 
