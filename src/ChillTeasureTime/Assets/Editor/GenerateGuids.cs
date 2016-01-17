@@ -11,11 +11,25 @@ public class GenerateGuids : ScriptableWizard
         var objList = GameObject.FindObjectsOfType(typeof(GameObject));
         foreach (var obj in objList)
         {
-            ItemSpawn guidObj = ((GameObject)obj).GetComponent<ItemSpawn>();
-            if (guidObj != null)
+            var itemSpawn = ((GameObject)obj).GetComponent<ItemSpawn>();
+            if (itemSpawn != null)
             {
-                guidObj.Guid = GuidToBase64(Guid.NewGuid());
-                EditorUtility.SetDirty(guidObj);
+                itemSpawn.Guid = GuidToBase64(Guid.NewGuid());
+                EditorUtility.SetDirty(itemSpawn);
+            }
+
+            var canBlow = ((GameObject)obj).GetComponent<CanBlow>();
+            if (canBlow != null)
+            {
+                canBlow.Guid = GuidToBase64(Guid.NewGuid());
+                EditorUtility.SetDirty(canBlow);
+            }
+
+            var sandPile = ((GameObject)obj).GetComponent<SandPile>();
+            if (sandPile != null)
+            {
+                sandPile.Guid = GuidToBase64(Guid.NewGuid());
+                EditorUtility.SetDirty(sandPile);
             }
         }
     }
