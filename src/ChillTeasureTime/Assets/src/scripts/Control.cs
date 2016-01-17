@@ -76,12 +76,18 @@ public class Control : MonoBehaviour
             else
             {
                 _animator.SetTrigger("ToWingFlap");
-                var first = CurrentInteractables.FirstOrDefault(i => i is CanBlow);
+                var firstBlow = CurrentInteractables.FirstOrDefault(i => i is CanBlow);
+                if (firstBlow != null)
+                {
+                    StartCoroutine(firstBlow.DoSequence(() => { }));
+                }
+
+                var first = CurrentInteractables.FirstOrDefault(i => i is SandPile);
                 if (first != null)
                 {
-                    StartCoroutine(first.DoSequence(() => {}));
+                    StartCoroutine(first.DoSequence(() => { }));
                 }
-                
+
                 // Play wing flap
                 // Target Do animation / spawning
             }
