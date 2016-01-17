@@ -27,10 +27,9 @@ public class Nest : MonoBehaviour
 
     public List<Milestone> Milestones = new List<Milestone>
     {
-        //new Milestone(1, "0", new List<Line>{new Line("", "")}),
-        new Milestone(1, "1", new List<Line>{new Line("", "Some nearby birds were attracted by your newfound riches.")}),
-        new Milestone(2, "2", new List<Line>{new Line("", "Here is another message for two shiny items")}),
-        new Milestone(3, "3", new List<Line>{new Line("", "This message is for three.")})
+        new Milestone(1, null, new List<Line>{new Line("Helpful Birdly", "Ah. Hello! Another straggler! Staying warm in this cold weather?"), new Line("Helpful Birdly", "Most other birds have already gone south for the winter."), new Line("Helpful Birdly", "That's a nice bauble you found there. With enough of those, you could attract a bird-crew to head south with you.")}),
+        new Milestone(5, "1", new List<Line>{new Line("Winston \"Collecto\"", "Hmm. I see you found a paltry sum of shiny objects."), new Line("Winston \"Collecto\"", "UNFORTUNATELY. YOU WILL BE NO MATCH FOR MY COOL COLLECTION!"), /*TODO Show many baubles on person. Open wings.*/ new Line("Winston \"Collecto\"", "Have fun. Don't overwork yourself too much, bird.")}),
+        new Milestone(5, "2", new List<Line>{new Line("Helpful Birdly", "Hey bird-dude, I saw Winston talkin to you."), new Line("Helpful Birdly", "You know, as you gain shiny stuff, you're going to attract more attention. To keep up, you'll need some tricks."), new GetWingFlap(), new Line("Helpful Birdly", "If you press X, you can flap your wings and blow all sorts of stuff around! Try it on plants or sand piles!")})
     };
 
     public void Start()
@@ -141,14 +140,17 @@ public class Nest : MonoBehaviour
             {
                 Milestones.Remove(mileStone);
 
-                var birdSpawn = FindObjectsOfType<BirdSpawn>().FirstOrDefault(b => b.Id == mileStone.Id);
-                if (birdSpawn == null)
+                if (mileStone.Id != null)
                 {
-                    Debug.LogError("Expected BirdSpawn With Id '" + mileStone.Amount + "'");
+                    var birdSpawn = FindObjectsOfType<BirdSpawn>().FirstOrDefault(b => b.Id == mileStone.Id);
+                    if (birdSpawn == null)
+                    {
+                        Debug.LogError("Expected BirdSpawn With Id '" + mileStone.Amount + "'");
+                    }
+
+                    birdSpawn.SpawnBird();
                 }
-
-                birdSpawn.SpawnBird();
-
+                
                 if (mileStone.Lines.Any())
                 {
                     camMove.SetCenterPosition(GameObject.Find("CutsceneCameraFocus").transform.position);
