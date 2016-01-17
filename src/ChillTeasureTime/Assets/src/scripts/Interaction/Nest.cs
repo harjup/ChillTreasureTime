@@ -170,7 +170,7 @@ public class Nest : MonoBehaviour
                     yield return StartCoroutine(bird.WalkToTarget(OtherBirdEnd.transform.position));
                     // Walk bird from off-cam to on cam
                     
-                    yield return StartCoroutine(DialogService.Instance.DisplayDirections(mileStone.Directions));
+                    yield return StartCoroutine(DialogService.Instance.DisplayDirections(mileStone.Directions, () => {bird.Talk();}, () => {bird.Idle();}));
                     yield return StartCoroutine(bird.WalkToTarget(OtherBirdStart.transform.position));
                     // Walk bird back off cam
                     Destroy(go);

@@ -12,6 +12,8 @@ public class TalkingUi : MonoBehaviour
     private TextCrawler _textCrawler;
     private GameObject _doneImage;
 
+    
+
     public void Awake()
     {
         var textComponents = GetComponentsInChildren<Text>();
@@ -23,11 +25,16 @@ public class TalkingUi : MonoBehaviour
         _doneImage.SetActive(false);
     }
 
-    public IEnumerator TextCrawl(Line line)
+    public IEnumerator TextCrawl(Line line, Action doneCb = null)
     {
         _nameText.text = line.Name;
         yield return StartCoroutine(_textCrawler.TextCrawl(line.Content, (s) => _contentText.text = s));
         _doneImage.SetActive(true);
+
+        if (doneCb != null)
+        {
+            doneCb();
+        }
 
         while (!Input.GetKeyDown(KeyCode.X))
         {
