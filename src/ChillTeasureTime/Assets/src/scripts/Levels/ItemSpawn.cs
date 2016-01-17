@@ -45,9 +45,16 @@ public class ItemSpawn : MonoBehaviour
                     new Line("", "Wow! A shining coin! I should find a safe place to stash this.")
                 };
 
-                StartCoroutine(DialogService.Instance.DisplayLines(lines));
+                StartCoroutine(ShowText(lines));
                 State.Instance.FirstShinyCollected = true;
             }
         });
+    }
+
+    public IEnumerator ShowText(List<Line> lines)
+    {
+        FindObjectOfType<Player>().DisableControl();
+        yield return StartCoroutine(DialogService.Instance.DisplayLines(lines));
+        FindObjectOfType<Player>().EnableControl();
     }
 }

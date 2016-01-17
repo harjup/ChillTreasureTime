@@ -15,6 +15,11 @@ public class Nest : MonoBehaviour
     private IEnumerator _cashInRoutine;
 
     public GameObject ShiningBitDisplay;
+    public GameObject CutsceneBird;
+
+    public GameObject OtherBirdStart;
+    public GameObject OtherBirdEnd;
+
 
     public List<GameObject> ShinyBits = new List<GameObject>();
 
@@ -22,7 +27,7 @@ public class Nest : MonoBehaviour
 
     public List<Milestone> Milestones = new List<Milestone>
     {
-        new Milestone(1, "0", new List<Line>{new Line("", "")}),
+        //new Milestone(1, "0", new List<Line>{new Line("", "")}),
         new Milestone(1, "1", new List<Line>{new Line("", "Some nearby birds were attracted by your newfound riches.")}),
         new Milestone(2, "2", new List<Line>{new Line("", "Here is another message for two shiny items")}),
         new Milestone(3, "3", new List<Line>{new Line("", "This message is for three.")})
@@ -124,9 +129,13 @@ public class Nest : MonoBehaviour
 
         if (mileStones.Any())
         {
+           FindObjectOfType<Player>().DisableControl();
             // Fade Out
             // Spawn birds for mileStone
             yield return SceneFadeInOut.Instance.EndScene();
+
+            var camMove = FindObjectOfType<CameraMove>();
+            camMove.Pause = true;
 
             foreach (var mileStone in mileStones)
             {
@@ -142,18 +151,36 @@ public class Nest : MonoBehaviour
 
                 if (mileStone.Lines.Any())
                 {
+                    camMove.SetCenterPosition(GameObject.Find("CutsceneCameraFocus").transform.position);
+
+                    FindObjectOfType<Player>().transform.position =
+                        GameObject.Find("CutscenePlayerBirdPosition").transform.position;
+
+                    yield return SceneFadeInOut.Instance.StartScene();
+
+                    // Spawn bird of correct type on off-cam
+                    var go = Instantiate(CutsceneBird, OtherBirdStart.transform.position, Quaternion.identity) as GameObject;
+                    var bird = go.GetComponent<CutsceneBird>();
+
+                    yield return StartCoroutine(bird.WalkToTarget(OtherBirdEnd.transform.position));
+                    // Walk bird from off-cam to on cam
+                    
                     yield return StartCoroutine(DialogService.Instance.DisplayLines(mileStone.Lines));
+                    yield return StartCoroutine(bird.WalkToTarget(OtherBirdStart.transform.position));
+                    // Walk bird back off cam
+                    Destroy(go);
+
+                    yield return SceneFadeInOut.Instance.EndScene();
                 }
             }
 
+            camMove.Pause = false;
             yield return new WaitForSeconds(.25f);
 
             yield return SceneFadeInOut.Instance.StartScene();
             // Fade In
+            FindObjectOfType<Player>().EnableControl();
         }
-
-        
-
 
         _cashInRoutine = null;
         // Shoot all the collectables into the nest

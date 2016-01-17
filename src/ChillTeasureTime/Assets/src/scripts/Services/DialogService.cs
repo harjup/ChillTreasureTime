@@ -15,7 +15,6 @@ public class DialogService : Singleton<DialogService>
 
     public IEnumerator DisplayLines(List<Line> lines)
     {
-         FindObjectOfType<Player>().DisableControl();
         _guiCanvas.EnableTalking();
 
         foreach (var line in lines)
@@ -24,7 +23,5 @@ public class DialogService : Singleton<DialogService>
         }
 
         _guiCanvas.EnableOverworldUi();
-
-        FindObjectOfType<Player>().EnableControl();
     }
 }
