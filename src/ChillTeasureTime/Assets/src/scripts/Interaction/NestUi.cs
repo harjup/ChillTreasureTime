@@ -20,8 +20,6 @@ public class NestUi : MonoBehaviour
     void Update()
     {
         var storedCount = State.Instance.StoredShinyCount;
-
-
         _text.text = string.Format(_textTemplate, storedCount > 0 ? storedCount.ToString() : "");
     }
 }

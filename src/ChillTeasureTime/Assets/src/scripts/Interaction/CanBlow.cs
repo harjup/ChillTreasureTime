@@ -46,6 +46,8 @@ public class CanBlow : CanInteract
     public GameObject ShineySpawnLocation;
     public GameObject ShinyToSpawn;
 
+    public Animator _animator;
+
     private int count;
     public int MaxCount = 1;
 
@@ -61,11 +63,14 @@ public class CanBlow : CanInteract
         }
 
         count = CollectedCounts[Guid];
+
+        _animator = GetComponentInChildren<Animator>();
     }
 
     public override IEnumerator DoSequence(Action action)
     {
-        transform.DOShakePosition(.25f, Vector3.one, 40);
+        //transform.DOShakePosition(.25f, Vector3.one, 40);
+        _animator.SetTrigger("GetBlown");
 
         if (count < MaxCount)
         {
