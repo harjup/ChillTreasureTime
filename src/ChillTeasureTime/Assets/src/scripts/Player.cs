@@ -151,9 +151,9 @@ public class Player : MonoBehaviour
 
     public void RemoveInteractable(CanInteract canInteract)
     {
-        if (!_control.CurrentInteractables.Contains(canInteract))
+        if (_control.CurrentInteractables.Contains(canInteract))
         {
-            _control.CurrentInteractables.Add(canInteract);
+            _control.CurrentInteractables.Remove(canInteract);
         }
     }
 

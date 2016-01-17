@@ -34,11 +34,6 @@ public class IntroSequence : MonoBehaviour
 
 	        // ~~Start async here~~
             StartCoroutine(PlayIntroSequence(logos, cameraMove, player));
-
-	        
-	     
-	        
-	        // Enable player movement
 	    }
 	}
 
@@ -107,6 +102,8 @@ public class IntroSequence : MonoBehaviour
         // TODO Show controls graphic
 
         player.EnableControl();
+
+        State.Instance.IsIntro = false;
     }
 
 

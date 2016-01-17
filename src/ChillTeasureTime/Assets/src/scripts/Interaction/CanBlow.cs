@@ -20,6 +20,7 @@ public class CanInteract : MonoBehaviour
         }
     }
 
+
     public void OnTriggerExit(Collider other)
     {
         var hitbox = other.GetComponent<Hitbox>();
