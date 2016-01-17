@@ -173,7 +173,7 @@ public class Nest : MonoBehaviour
                     // Walk bird back off cam
                     Destroy(go);
 
-                    yield return SceneFadeInOut.Instance.EndScene();
+                    //yield return SceneFadeInOut.Instance.EndScene();
                 }
             }
 

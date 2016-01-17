@@ -11,7 +11,6 @@ public class SandPile : CanInteract
     public static List<string> ClearedPiles = new List<string>();
     public static Dictionary<string, int> CollectedCounts = new Dictionary<string, int>();
 
-
     public GameObject ShineySpawnLocation;
     public GameObject ShinyToSpawn;
     public GameObject BlockingCollider;
@@ -20,6 +19,7 @@ public class SandPile : CanInteract
     private int count;
     public int MaxCount = 3;
 
+  
     void Start()
     {
         ShineySpawnLocation = transform.Find("ShinySpawn").gameObject;
@@ -64,6 +64,12 @@ public class SandPile : CanInteract
 
     public override IEnumerator DoSequence(Action action)
     {
+        // If we already have been destroyed do nothing
+        if (Sprite == null)
+        {
+            yield break;
+        }
+
         yield return DOTween
             .Sequence()
             .Append(Sprite.transform.DOShakePosition(3f, Vector3.one.SetY(0f), 40))
