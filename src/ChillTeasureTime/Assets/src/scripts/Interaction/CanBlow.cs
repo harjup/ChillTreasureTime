@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using Random = UnityEngine.Random;
 
@@ -28,23 +29,48 @@ public class CanInteract : MonoBehaviour
 
 public class CanBlow : CanInteract
 {
+    public string Guid;
+    public static Dictionary<string, int> CollectedCounts = new Dictionary<string, int>();
+
+
     public GameObject ShineySpawnLocation;
     public GameObject ShinyToSpawn;
+
+    private int count;
+    public int MaxCount = 1;
 
     void Start()
     {
         ShineySpawnLocation = transform.Find("ShinySpawn").gameObject;
 
         InterestedHitboxType = HitboxType.PlayerWing;
+
+        if (!CollectedCounts.ContainsKey(Guid))
+        {
+            CollectedCounts.Add(Guid, 0);
+        }
+
+        count = CollectedCounts[Guid];
     }
 
     public override IEnumerator DoSequence(Action action)
     {
         transform.DOShakePosition(.25f, Vector3.one, 40);
-        var go = Instantiate(ShinyToSpawn, ShineySpawnLocation.transform.position, Quaternion.identity) as GameObject;
 
-        var shiny = go.GetComponent<Collectable>();
-        shiny.SetSpeed(new Vector3(1f, 1f, 0f));
+        if (count < MaxCount)
+        {
+            var go = Instantiate(ShinyToSpawn, ShineySpawnLocation.transform.position, Quaternion.identity) as GameObject;
+
+            var shiny = go.GetComponent<Collectable>();
+            shiny.SetSpeed(new Vector3(3f, 3f, 0f));
+
+            shiny.SetCallback(() =>
+            {
+                 CollectedCounts[Guid]++;
+            });
+
+            count++;
+        }
 
         yield return null;
     }

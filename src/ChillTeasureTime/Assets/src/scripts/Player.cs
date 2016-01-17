@@ -52,10 +52,6 @@ public class Player : MonoBehaviour
         {
             _control.Disabled = true;
         }
-        else
-        {
-            _control.Disabled = false;
-        }
 
 
         StartLevelTransitionIn(startSpot);
@@ -70,7 +66,6 @@ public class Player : MonoBehaviour
         // Set animation to walking
         // Move toward walkTarget
         _control.Disabled = true;
-
         SceneFadeInOut.Instance.EndScene();
 
         transform
@@ -100,7 +95,10 @@ public class Player : MonoBehaviour
 
         var tab = start.gameObject.GetComponentInChildren<TransitionTab>();
         transform.position = tab.WalkTarget.transform.position;
-        transform.DOMove(tab.EnterTarget.transform.position, .5f).OnComplete(() => { _control.Disabled = false; });
+        transform.DOMove(tab.EnterTarget.transform.position, .5f).OnComplete(() =>
+        {
+            _control.Disabled = false;
+        });
         
         // Pull info off the door or tab for what our animation should be
     }
