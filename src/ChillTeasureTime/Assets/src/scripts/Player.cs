@@ -156,4 +156,9 @@ public class Player : MonoBehaviour
             _control.CurrentInteractables.Add(canInteract);
         }
     }
+
+    public void FaceRight()
+    {
+        _control.FaceRight();
+    }
 }

@@ -141,6 +141,10 @@ public class Control : MonoBehaviour
 	    {
             _animator.transform.localScale = _animator.transform.localScale.SetX(-1);
 	    }
-
 	}
+
+    public void FaceRight()
+    {
+        _animator.transform.localScale = _animator.transform.localScale.SetX(1);
+    }
 }

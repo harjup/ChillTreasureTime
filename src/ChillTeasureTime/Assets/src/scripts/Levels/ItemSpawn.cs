@@ -38,7 +38,8 @@ public class ItemSpawn : MonoBehaviour
         go.GetComponent<Collectable>().SetCallback(() =>
         {
             CollectedList.Add(Guid);
-            if (ShineyType == CollectableType.Good && !State.Instance.FirstShinyCollected)
+            if (ShineyType == CollectableType.Good && !State.Instance.
+                FirstShinyCollected)
             {
                 var lines = new List<Line>
                 {

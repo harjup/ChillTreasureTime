@@ -159,6 +159,8 @@ public class Nest : MonoBehaviour
                     FindObjectOfType<Player>().transform.position =
                         GameObject.Find("CutscenePlayerBirdPosition").transform.position;
 
+                    FindObjectOfType<Player>().FaceRight();
+
                     yield return SceneFadeInOut.Instance.StartScene();
 
                     // Spawn bird of correct type on off-cam
