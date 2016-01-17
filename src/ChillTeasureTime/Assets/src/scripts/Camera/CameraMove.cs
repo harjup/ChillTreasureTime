@@ -7,6 +7,7 @@ public class CameraMove : MonoBehaviour
     // How quickly the camera accelerates to keep up with the player.
     // Keep it under 1f.
     public float cameraSnapX = .1f;
+    public float cameraSnapY = .9f;
     public float cameraSnapZ = .4f;
 
     // Distance the player can move away from the camera center before it starts trying to recenter.
@@ -62,6 +63,7 @@ public class CameraMove : MonoBehaviour
         // TODO: Maybe let's use DoTween and have it be reasonably smooth instead of falling on our old iTween business
         var positionDifference = targetTransform.position - cameraTransform.position;
         float xSpeed = Mathf.Abs(positionDifference.x) * cameraSnapX;
+        float ySpeed = Mathf.Abs(positionDifference.y) * cameraSnapY;
         float zSpeed = Mathf.Abs(positionDifference.z) * cameraSnapZ;
 
         //Cap the camera's speed so it doesn't go fucking nuts and start overshooting the player
@@ -75,6 +77,13 @@ public class CameraMove : MonoBehaviour
         if (Mathf.Abs(positionDifference.z) >= cameraFreeZ)
         {
             cameraTransform.position = cameraTransform.position.SetZ(iTween.FloatUpdate(cameraTransform.position.z, targetTransform.position.z, zSpeed));
+        }
+
+        //TODO: Generalize in some way
+        if (targetTransform.GetComponentInChildren<GroundCheck>() != null 
+            && targetTransform.GetComponentInChildren<GroundCheck>().IsOnGround)
+        {
+            cameraTransform.position = cameraTransform.position.SetY(iTween.FloatUpdate(cameraTransform.position.y, targetTransform.position.y, 5f));
         }
     }
 

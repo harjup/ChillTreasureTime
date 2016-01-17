@@ -8,7 +8,11 @@ public class Control : MonoBehaviour
 {
     private Collider _collider;
     private Rigidbody _rigidbody;
+    private GroundCheck _groundCheck;
+
     public float BaseSpeed = 8;
+
+    public bool OnGround;
 
     private Animator _animator;
 
@@ -53,6 +57,7 @@ public class Control : MonoBehaviour
 	{
 	    _rigidbody = GetComponent<Rigidbody>();
 	    _animator = GetComponentInChildren<Animator>();
+	    _groundCheck = GetComponentInChildren<GroundCheck>();
 	}
 	
 	// Update is called once per frame
@@ -64,7 +69,7 @@ public class Control : MonoBehaviour
 	    }
 
         //TODO: Limit to when you're on the ground
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X) && _groundCheck.IsOnGround)
         {
             if (CurrentExaminables.Any())
             {
@@ -112,26 +117,45 @@ public class Control : MonoBehaviour
 
         var yVel = _rigidbody.velocity.y - (20 * Time.fixedDeltaTime);
 	    
-	    if (Input.GetKeyDown(KeyCode.Z) && yVel < 1f)
+	    //if (Input.GetKeyDown(KeyCode.Z) && yVel < 1f) // It'd be neat to have a number of flaps allowed before you have to touch ground
+        if (Input.GetKeyDown(KeyCode.Z) && _groundCheck.IsOnGround)
 	    {
 	        yVel = 10f;
 	    }
 
+	  
+
         _rigidbody.velocity = new Vector3(xVel, yVel, zVel);
 
-	    if (_rigidbody.velocity.SetY(0f).magnitude > .01f)
+        Debug.Log(_groundCheck.IsOnGround);
+	    if (_groundCheck.IsOnGround)
 	    {
-	        foreach (var cb in MovementCallbacks)
+	        if (_rigidbody.velocity.SetY(0f).magnitude > .01f)
 	        {
-	            cb();
-	        }
+	            foreach (var cb in MovementCallbacks)
+	            {
+	                cb();
+	            }
 
-	        _animator.SetTrigger("ToWalk");
+                _animator.CrossFade("Walk", 0f);
+	        }
+	        else
+	        {
+                _animator.CrossFade("Idle", 0f);
+	        }
 	    }
 	    else
 	    {
-            _animator.SetTrigger("ToIdle");
+            if (_rigidbody.velocity.y > 0)
+            {
+                _animator.CrossFade("JumpUp", 0f);
+            }
+            else
+            {
+                _animator.CrossFade("JumpDown", 0f);
+            }
 	    }
+	    
 
 	    if (xVel > 0)
 	    {
