@@ -9,6 +9,7 @@ public class Bird : MonoBehaviour, IExaminable
     public string TextId;
     private GuiCanvas _guiCanvas;
     private TalkingUi _talkingUi;
+    private Animator _animator;
     private GameObject QMark;
 
     public List<Direction> Directions;
@@ -17,6 +18,8 @@ public class Bird : MonoBehaviour, IExaminable
     {
         _guiCanvas = GuiCanvas.Instance;
         _talkingUi = _guiCanvas.TalkingUi;
+
+        _animator = GetComponentInChildren<Animator>();
 
         QMark = transform.FindChild("?").gameObject;
         QMark.SetActive(false);
@@ -33,13 +36,13 @@ public class Bird : MonoBehaviour, IExaminable
         {
             if (direction is Line)
             {
-                yield return StartCoroutine(_talkingUi.TextCrawl(direction as Line));
+                _animator.CrossFade("Talk", 0f);
+                yield return StartCoroutine(_talkingUi.TextCrawl(direction as Line, () => { _animator.CrossFade("Idle", 0f); }));
             }
 
             // Not currently used, won't get hit
             if (direction is GetWingFlap)
             {
-                Debug.Log("Unlock wing flap");
                 State.Instance.UnlockWingFlap();
             }
 
@@ -69,13 +72,15 @@ public class Bird : MonoBehaviour, IExaminable
 
                 if (result)
                 {
-                    yield return StartCoroutine(_talkingUi.TextCrawl(new Line("Mayor Brachie", "Awesome. Let's go!")));
+                    _animator.CrossFade("Talk", 0f);
+                    yield return StartCoroutine(_talkingUi.TextCrawl(new Line("Mayor Brachie", "Awesome. Let's go!"), () => { _animator.CrossFade("Idle", 0f); }));
                     yield return SceneFadeInOut.Instance.EndScene();
                     Application.LoadLevel("End");
                 }
                 else
                 {
-                    yield return StartCoroutine(_talkingUi.TextCrawl(new Line("Mayor Brachie", "Alright, let me know.")));
+                    _animator.CrossFade("Talk", 0f);
+                    yield return StartCoroutine(_talkingUi.TextCrawl(new Line("Mayor Brachie", "Alright, let me know."), () => { _animator.CrossFade("Idle", 0f); }));
                 }
             }
         }
@@ -92,7 +97,6 @@ public class Bird : MonoBehaviour, IExaminable
         {
             QMark.SetActive(true);
             player.AddExaminable(this);
-            Debug.Log("Enter " + other);
         }
     }
 
@@ -103,7 +107,6 @@ public class Bird : MonoBehaviour, IExaminable
         {
             QMark.SetActive(false);
             player.RemoveExaminable(this);
-            Debug.Log("Enter " + other);
         }
     }
 }
