@@ -45,7 +45,7 @@ public class GuiCanvas : Singleton<GuiCanvas>
 
         EnableTitleCard();
 
-        //EnableOverworldUi();
+        OverworldUi.SetActive(true);
     }
 
     private void EnableTitleCard()
