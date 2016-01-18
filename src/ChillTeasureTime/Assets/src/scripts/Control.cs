@@ -23,6 +23,8 @@ public class Control : MonoBehaviour
 
     public readonly List<Action> MovementCallbacks = new List<Action>();
 
+    private bool _firstInputGiven = false;
+
     public bool Disabled
     {
         get
@@ -124,37 +126,37 @@ public class Control : MonoBehaviour
 	    }
 
 	  
-
         _rigidbody.velocity = new Vector3(xVel, yVel, zVel);
 
-        Debug.Log(_groundCheck.IsOnGround);
-	    if (_groundCheck.IsOnGround)
-	    {
-	        if (_rigidbody.velocity.SetY(0f).magnitude > .01f)
-	        {
-	            foreach (var cb in MovementCallbacks)
-	            {
-	                cb();
-	            }
+	    
+        if (_groundCheck.IsOnGround)
+        {
+            if (_rigidbody.velocity.SetY(0f).magnitude > .1f)
+            {
+                foreach (var cb in MovementCallbacks)
+                {
+                    cb();
+                    _firstInputGiven = true;
+                }
 
                 _animator.CrossFade("Walk", 0f);
-	        }
-	        else
-	        {
+            }
+            else if (_firstInputGiven)
+            {
                 _animator.CrossFade("Idle", 0f);
-	        }
-	    }
-	    else
-	    {
+            }
+        }
+        else if (_firstInputGiven)
+        {
             if (_rigidbody.velocity.y > 0)
             {
                 _animator.CrossFade("JumpUp", 0f);
             }
-            else
+            else if (_rigidbody.velocity.y < 0)
             {
                 _animator.CrossFade("JumpDown", 0f);
             }
-	    }
+        }
 	    
 
 	    if (xVel > 0)
