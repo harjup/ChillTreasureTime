@@ -70,7 +70,8 @@ public class Bird : MonoBehaviour, IExaminable
                 if (result)
                 {
                     yield return StartCoroutine(_talkingUi.TextCrawl(new Line("Mayor Brachie", "Awesome. Let's go!")));
-                    SceneFadeInOut.Instance.EndScene();
+                    yield return SceneFadeInOut.Instance.EndScene();
+                    Application.LoadLevel("End");
                 }
                 else
                 {

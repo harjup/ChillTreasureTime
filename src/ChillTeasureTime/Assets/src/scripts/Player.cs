@@ -49,11 +49,12 @@ public class Player : MonoBehaviour
             startSpot = FindObjectsOfType<PlayerStart>().FirstOrDefault(p => p.LevelEntrance == LevelEntrance.Start);
         }
 
-        if (Application.loadedLevelName == "Fight" || State.Instance.IsIntro)
+        if (Application.loadedLevelName == "Fight" 
+            || Application.loadedLevelName == "End" 
+            || State.Instance.IsIntro)
         {
             _control.Disabled = true;
         }
-
 
         StartLevelTransitionIn(startSpot);
     }
