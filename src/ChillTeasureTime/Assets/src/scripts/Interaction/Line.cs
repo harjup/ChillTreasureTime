@@ -22,6 +22,13 @@ public class GetWingFlap : Line
     {
     }
 }
+public class CameraFadeIn: Direction
+{
+}
+
+public class CameraFadeOut : Direction
+{
+}
 
 public class LeaveChoicePrompt : Direction
 {

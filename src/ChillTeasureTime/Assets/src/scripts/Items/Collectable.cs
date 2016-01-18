@@ -38,7 +38,7 @@ public class Collectable : MonoBehaviour
     {
         yield return DOTween
             .Sequence()
-            .Append(transform.DOLocalMoveY(3f, .5f).SetEase(Ease.Linear))
+            .Append(transform.DOLocalMoveY(transform.position.y + 3f, .5f).SetEase(Ease.Linear))
             .WaitForCompletion();
 
         transform.DOScale(transform.localScale / 4f, .25f).SetEase(Ease.OutQuad);

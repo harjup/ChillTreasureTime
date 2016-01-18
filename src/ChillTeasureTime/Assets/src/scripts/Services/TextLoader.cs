@@ -8,6 +8,7 @@ public class TextLoader : Singleton<TextLoader>
     Dictionary<string, List<Line>> _lineMap = new Dictionary<string, List<Line>>()
     {
         {"ToLightHouse",  new List<Line> {new Line("Signpost", "<- LightHouse"),new Line("Signpost", "(Please do not climb on sand piles)")}},
+        {"ToMainFromLighthouse",  new List<Line> {new Line("Signpost", "-> Beach")}},
         {"ShinyNest", new List<Line> {new Line("Signpost", "Ermile's completely original shiny collection. Do not steal.")}}
         
     };

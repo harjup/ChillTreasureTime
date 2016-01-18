@@ -38,8 +38,23 @@ public class DirectionService : Singleton<DirectionService>
         }},
         {"Main-Mayor",
         new List<Direction>{
-            new Line("Mayor Brachie", "Hello. Ready to leave?"),
+           new Line("Mayor Brachie", "Hello. Ready to leave?"),
             new LeaveChoicePrompt()
+        }},
+        {"Lighthouse-Coffee", new List<Direction>{
+            new Line("Jittery", "I've got a pot brewing. Want some coffee?"),
+            new CameraFadeOut(),
+            new Line("", "You share some hot coffee and talk about life. Your heart is warmed."),
+            new CameraFadeIn(),
+            new Line("Jittery", "I've always got more on the burner.")
+        }},
+        {"Lighthouse-Treasure", new List<Direction>{
+            new Line("Johnny", "I heard there's a bird-pirate's treasure on top of the lighthouse."),
+            new Line("Johnny", "I'd like to think his name was Johnny Sparrow."),
+            new Line("Johnny", "..."),
+            new Line("Johnny", "My name is Johnny."),
+            new Line("Johnny", "..."),
+            new Line("Johnny", "I want to be a pirate.")
         }}
     };
 

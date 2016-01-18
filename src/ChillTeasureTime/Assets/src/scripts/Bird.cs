@@ -71,6 +71,16 @@ public class Bird : MonoBehaviour, IExaminable
                 State.Instance.UnlockWingFlap();
             }
 
+            if (direction is CameraFadeIn)
+            {
+                yield return SceneFadeInOut.Instance.StartScene();
+            }
+
+            if (direction is CameraFadeOut)
+            {
+                yield return SceneFadeInOut.Instance.EndScene();
+            }
+
             if (direction is LoadFight)
             {
                 doneCallback();
