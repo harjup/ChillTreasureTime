@@ -14,6 +14,8 @@ public class Bird : MonoBehaviour, IExaminable
 
     public List<Direction> Directions;
 
+    private BirdProps _birdProps;
+
     public void Start()
     {
         _guiCanvas = GuiCanvas.Instance;
@@ -21,10 +23,30 @@ public class Bird : MonoBehaviour, IExaminable
 
         _animator = GetComponentInChildren<Animator>();
 
+        _birdProps = BirdPropsService.Instance.GetBirdPropsById(TextId);
+
+        if (_birdProps != null)
+        {
+            if (_birdProps.AnimatorController != null)
+            {
+                _animator.runtimeAnimatorController = _birdProps.AnimatorController;
+            }
+
+            _animator.CrossFade(_birdProps.DefaultAnim, 0f);
+        }
+        else
+        {
+            _birdProps = new BirdProps("Idle", true, null);
+        }
+
         QMark = transform.FindChild("?").gameObject;
         QMark.SetActive(false);
 
         Directions = DirectionService.Instance.GetDirectionsById(TextId);
+
+        _animator.CrossFade(_birdProps.DefaultAnim, 0f);
+        _animator.transform.localScale = 
+            _animator.transform.localScale.SetX(_birdProps.FaceLeft ? 1 : -1);
     }
 
     public IEnumerator StartSequence(Action doneCallback)
@@ -37,7 +59,10 @@ public class Bird : MonoBehaviour, IExaminable
             if (direction is Line)
             {
                 _animator.CrossFade("Talk", 0f);
-                yield return StartCoroutine(_talkingUi.TextCrawl(direction as Line, () => { _animator.CrossFade("Idle", 0f); }));
+                yield return StartCoroutine(_talkingUi.TextCrawl(direction as Line, () =>
+                {
+                    _animator.CrossFade("Idle", 0f);
+                }));
             }
 
             // Not currently used, won't get hit
@@ -85,6 +110,7 @@ public class Bird : MonoBehaviour, IExaminable
             }
         }
 
+        _animator.CrossFade(_birdProps.DefaultAnim, 0f);
         doneCallback();
         _guiCanvas.EnableOverworldUi();
         QMark.SetActive(true);

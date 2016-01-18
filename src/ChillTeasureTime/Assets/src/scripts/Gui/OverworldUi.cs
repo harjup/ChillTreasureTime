@@ -49,6 +49,7 @@ public class OverworldUi : MonoBehaviour
         // This got gnarlier than expected
         if (newShineyCount || newTrashCount)
 	    {
+
 	        if (newTrashCount)
 	        {
                 _trashText.gameObject.SetActive(true);

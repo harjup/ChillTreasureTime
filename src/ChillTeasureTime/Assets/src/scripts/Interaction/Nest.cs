@@ -33,8 +33,8 @@ public class Nest : MonoBehaviour
         new Milestone(5, null, new List<Direction>{new Line("Winston \"Collecto\"", "Hmm. I see you found a paltry sum of shiny objects."), new Line("Winston \"Collecto\"", "UNFORTUNATELY. YOU WILL BE NO MATCH FOR MY COOL COLLECTION!"), /*TODO Show many baubles on person. Open wings.*/ new Line("Winston \"Collecto\"", "Have fun. Don't overwork yourself too much, bird.")}),
         new Milestone(5, null, new List<Direction>{new Line("Helpful Birdly", "Hey bird-dude, I saw Winston talkin to you."), new Line("Helpful Birdly", "You know, as you gain shiny stuff, you're going to attract more attention. To keep up, you'll need some tricks."), new GetWingFlap(), new Line("Helpful Birdly", "If you press X, you can flap your wings and blow all sorts of stuff around! Try it on plants or sand piles!")}),
 
-        new Milestone(5, "Main-Observer", null),
-        new Milestone(5, "Main-PeckHelp", null),
+        new Milestone(1, "Main-Observer", null),
+        new Milestone(1, "Main-PeckHelp", null),
 
         new Milestone(10, "Main-Mayor", new List<Direction>{new Line("Mayor Brachie", "Hello, I am the bird-mayor of the nearby town. I am going around looking for birds that still need a group to head down south."), new Line("Mayor Brachie", "Come talk to me if you'd like to head out. I'll be over near the water.")}),
     };
