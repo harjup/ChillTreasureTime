@@ -67,6 +67,11 @@ public class Control : MonoBehaviour
 	{
 	    if (Disabled)
 	    {
+	        if (_firstInputGiven)
+	        {
+                _animator.CrossFade("Listen", 0f);
+	        }
+
 	        return;
 	    }
 

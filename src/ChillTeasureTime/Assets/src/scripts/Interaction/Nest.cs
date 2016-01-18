@@ -168,6 +168,8 @@ public class Nest : MonoBehaviour
 
                     yield return SceneFadeInOut.Instance.StartScene();
 
+
+
                     // Spawn bird of correct type on off-cam
                     var go = Instantiate(CutsceneBird, OtherBirdStart.transform.position, Quaternion.identity) as GameObject;
                     var bird = go.GetComponent<CutsceneBird>();
