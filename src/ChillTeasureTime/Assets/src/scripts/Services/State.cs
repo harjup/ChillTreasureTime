@@ -16,6 +16,7 @@ public class State : Singleton<State>
     public List<Power> PowerList = new List<Power>();
     public bool FirstShinyCollected = false;
     public LevelEntrance LevelEntrance;
+    public float TimeElapsed;
 
     public Dictionary<CollectableType, int> PlayerShinyCount = new Dictionary<CollectableType, int>
     {
@@ -59,6 +60,14 @@ public class State : Singleton<State>
         if (!PowerList.Contains(Power.WingFlap))
         {
             PowerList.Add(Power.WingFlap);
+        }
+    }
+
+    public void Update()
+    {
+        if (Application.loadedLevelName != "End")
+        {
+            TimeElapsed += Time.smoothDeltaTime;
         }
     }
 }
