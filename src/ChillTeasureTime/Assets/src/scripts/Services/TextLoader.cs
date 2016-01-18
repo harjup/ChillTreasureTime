@@ -7,7 +7,7 @@ public class TextLoader : Singleton<TextLoader>
 
     Dictionary<string, List<Line>> _lineMap = new Dictionary<string, List<Line>>()
     {
-        {"Basic",  new List<Line> {new Line("Signpost", "I AM A BEAUTIFUL SIGNPOST THAT IS ALL"),new Line("Signpost", "ALSO, I AM MADE OUT OF WOOD"),new Line("Signpost", "ALRIGHT, I HAD A LITTLE EXTRA")}},
+        {"ToLightHouse",  new List<Line> {new Line("Signpost", "<- LightHouse"),new Line("Signpost", "(Please do not climb on sand piles)")}},
         {"ShinyNest", new List<Line> {new Line("Signpost", "Ermile's completely original shiny collection. Do not steal.")}}
         
     };

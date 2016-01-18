@@ -74,10 +74,10 @@ public class SandPile : CanInteract
             .Sequence()
             .Append(Sprite.transform.DOShakePosition(3f, Vector3.one.SetY(0f), 40))
             .Insert(0f, transform.DOMoveY(-1f, 3f))
-            .InsertCallback(.3f, SpawnShiny)
-            .InsertCallback(.6f, SpawnShiny)
+            .InsertCallback(2.5f, SpawnShiny)
             .WaitForCompletion();
 
+        Destroy(Sprite);
         Destroy(BlockingCollider);
 
         if (!ClearedPiles.Contains(Guid))
