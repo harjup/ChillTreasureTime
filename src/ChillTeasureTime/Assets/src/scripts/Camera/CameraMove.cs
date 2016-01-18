@@ -81,7 +81,8 @@ public class CameraMove : MonoBehaviour
 
         //TODO: Generalize in some way
         if (targetTransform.GetComponentInChildren<GroundCheck>() != null 
-            && targetTransform.GetComponentInChildren<GroundCheck>().IsOnGround)
+            && targetTransform.GetComponentInChildren<GroundCheck>().IsOnGround
+            && !State.Instance.IsIntro)
         {
             cameraTransform.position = cameraTransform.position.SetY(iTween.FloatUpdate(cameraTransform.position.y, targetTransform.position.y, 5f));
         }
