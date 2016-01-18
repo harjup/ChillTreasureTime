@@ -8,6 +8,7 @@ public class GuiCanvas : Singleton<GuiCanvas>
     private GameObject OverworldUi;
     private GameObject IntroUi;
 
+    private ChoiceUi _choiceUi;
     private TalkingUi _talkingUi;
     public GameObject TalkingUiObject;
     
@@ -22,6 +23,18 @@ public class GuiCanvas : Singleton<GuiCanvas>
             }
             return _talkingUi;
         } 
+    }
+
+    public ChoiceUi ChoiceUi
+    {
+        get
+        {
+            if (_choiceUi == null)
+            {
+                _choiceUi = transform.FindChild("ChoiceUi").gameObject.GetComponent<ChoiceUi>();
+            }
+            return _choiceUi;
+        }
     }
 
     void Start()
@@ -63,6 +76,7 @@ public class GuiCanvas : Singleton<GuiCanvas>
         IntroUi.SetActive(false);
         OverworldUi.SetActive(false);
         TalkingUiObject.SetActive(false);
+        ChoiceUi.gameObject.SetActive(false);
     }
 
     // Returns all the children of introUi
@@ -75,5 +89,15 @@ public class GuiCanvas : Singleton<GuiCanvas>
             .Cast<Transform>()
             .Select(t => t.gameObject)
             .ToList();
+    }
+
+    public void EnableChoice()
+    {
+        ChoiceUi.gameObject.SetActive(true);
+    }
+
+    public void DisableChoice()
+    {
+        ChoiceUi.gameObject.SetActive(false);
     }
 }

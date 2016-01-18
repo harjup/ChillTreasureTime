@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 
 public class Line : Direction
@@ -20,6 +21,10 @@ public class GetWingFlap : Line
     public GetWingFlap() : base("", "Got Wing Flap!")
     {
     }
+}
+
+public class LeaveChoicePrompt : Direction
+{
 }
 
 public class LoadFight : Direction

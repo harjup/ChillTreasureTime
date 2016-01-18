@@ -35,6 +35,11 @@ public class DirectionService : Singleton<DirectionService>
         {"Main-PeckHelp",
         new List<Direction>{
             new Line("Pokey", "I think I saw a crab hiding somewhere over here. They're tricky to peck, but they always seem to have shiny stuff in their claws."), 
+        }},
+        {"Main-Mayor",
+        new List<Direction>{
+            new Line("Mayor Brachie", "Hello. Ready to leave?"),
+            new LeaveChoicePrompt()
         }}
     };
 

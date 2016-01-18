@@ -55,13 +55,34 @@ public class Bird : MonoBehaviour, IExaminable
 
                 LevelLoader.Instance.LoadFight();
             }
+
+            if (direction is LeaveChoicePrompt)
+            {
+                _guiCanvas.EnableChoice();
+                yield return new WaitForEndOfFrame();
+                var result = false;
+                yield return StartCoroutine(_guiCanvas.ChoiceUi.WaitForPlayerChoice(res =>
+                {
+                    result = res;
+                }));
+                _guiCanvas.DisableChoice();
+
+                if (result)
+                {
+                    yield return StartCoroutine(_talkingUi.TextCrawl(new Line("Mayor Brachie", "Awesome. Let's go!")));
+                    SceneFadeInOut.Instance.EndScene();
+                }
+                else
+                {
+                    yield return StartCoroutine(_talkingUi.TextCrawl(new Line("Mayor Brachie", "Alright, let me know.")));
+                }
+            }
         }
 
         doneCallback();
         _guiCanvas.EnableOverworldUi();
         QMark.SetActive(true);
     }
-
 
     public void OnTriggerEnter(Collider other)
     {
