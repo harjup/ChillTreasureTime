@@ -20,7 +20,22 @@ public class DirectionService : Singleton<DirectionService>
         {"2", 
             new List<Direction>{new Line("Tiny Bird", "Im bird 2. Hello.")}},
         {"3", 
-            new List<Direction>{new Line("Tiny Bird", "Im bird 3. Hello hello!")}}
+            new List<Direction>{new Line("Tiny Bird", "Im bird 3. Hello hello!")}},
+        { "Main-JumpHelper", 
+          new List<Direction>{
+              new Line("Jupley", "Hmm. I bet you could jump on those rocks."), 
+              new Line("Jupley", "Imagine a \"computer keyboard\". If there were a \"Z Button\" on it, then pressing it will incite a jump."),
+              new Line("Jupley", "Ergo, pressing this \"Z Button\" will get you closer to the top of those rocks. QED."), 
+          }},
+        { "Main-Observer", 
+        new List<Direction>{
+            new Line("Rocko", "It's so peaceful here with everyone else gone. The twinkling stars remind me of all the coins and silver in my nest."), 
+            new Line("Rocko", "Also my-bird spouse already left."), 
+        }},
+        {"Main-PeckHelp",
+        new List<Direction>{
+            new Line("Pokey", "I think I saw a crab hiding somewhere over here. They're tricky to peck, but they always seem to have shiny stuff in their claws."), 
+        }}
     };
 
     public List<Direction> GetDirectionsById(string id)
