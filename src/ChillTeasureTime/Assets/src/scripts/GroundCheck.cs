@@ -6,7 +6,7 @@ public class GroundCheck : MonoBehaviour
 {
     public bool IsOnGround { get; private set; }
 
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         var geometry = other.gameObject.GetComponent<LevelGeometry>();
         if (geometry != null)
