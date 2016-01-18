@@ -1,21 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 
 public class BirdPropsService : Singleton<BirdPropsService>
 {
 
-    public Dictionary<string, BirdProps> BirdPropses = new Dictionary<string, BirdProps>
-    {
-        {"Main-Observer", new BirdProps("RestPose", false, null)},
-        {"Main-JumpHelper", new BirdProps("RestPoseFront", false, null)},
-    };
+    public AnimatorController RedBirdAnimatorController;
+    public AnimatorController GreenBirdAnimatorController;
 
+    public static Dictionary<string, BirdProps> BirdPropses;
+
+    private Dictionary<string, BirdProps> GetBirdPropses()
+    {
+        if (BirdPropses == null)
+        {
+            BirdPropses = new Dictionary<string, BirdProps>
+            {
+                {"Main-Observer", new BirdProps("RestPose", false, GreenBirdAnimatorController)},
+                {"Main-JumpHelper", new BirdProps("RestPoseFront", false, null)},
+            };
+        }
+
+        return BirdPropses;
+    }
+    
     public BirdProps GetBirdPropsById(string id)
     {
-        if (BirdPropses.ContainsKey(id))
+        var bp = GetBirdPropses();
+        if (bp.ContainsKey(id))
         {
-            return BirdPropses[id];
+            return bp[id];
         }
 
         return null;
