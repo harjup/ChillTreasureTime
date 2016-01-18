@@ -7,10 +7,6 @@ using UnityEngine.UI;
 
 public class EndCanvas : MonoBehaviour
 {
-
-   
-
-
     void Start()
     {
          List<GuiDirection> GuiDirections = new List<GuiDirection>
