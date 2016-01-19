@@ -21,6 +21,9 @@ public class Nest : MonoBehaviour
     public GameObject OtherBirdEnd;
 
 
+    public RuntimeAnimatorController GreenAnimatorController;
+    public RuntimeAnimatorController RedAnimatorController;
+
     public List<GameObject> ShinyBits = new List<GameObject>();
 
     public GameObject CanDepositObject;
@@ -28,15 +31,15 @@ public class Nest : MonoBehaviour
     // We want our list to persist over time
     public static List<Milestone> Milestones = new List<Milestone>
     {
-        new Milestone(1, null, new List<Direction>{new Line("Helpful Birdly", "Ah. Hello! Another straggler! Staying warm in this cold weather?"), new Line("Helpful Birdly", "Most other birds have already gone south for the winter."), new Line("Helpful Birdly", "That's a nice bauble you found there. With enough of those, you could attract a bird-crew to head south with you.")}),
-        new Milestone(1, "Main-JumpHelper", null),
-        new Milestone(1, "Main-Observer", null),
+        new Milestone(1, birdType: BirdType.Green, directions: new List<Direction>{new Line("Rocko", "Ah. Hello! Another straggler! Staying warm in this cold weather?"), new Line("Rocko", "Most other birds have already gone south for the winter."), new Line("Rocko", "That's a nice bauble you found there. With enough of those, you could attract a bird-crew to head south with you.")}),
+        new Milestone(1, "Main-JumpHelper"),
+        new Milestone(1, "Main-Observer"),
 
-        new Milestone(5, null, new List<Direction>{new Line("Winston \"Collecto\"", "Hmm. I see you found a paltry sum of shiny objects."), new Line("Winston \"Collecto\"", "UNFORTUNATELY. YOU WILL BE NO MATCH FOR MY COOL COLLECTION!"), /*TODO Show many baubles on person. Open wings.*/ new Line("Winston \"Collecto\"", "Have fun. Don't overwork yourself too much, bird.")}),
-        new Milestone(5, null, new List<Direction>{new Line("Helpful Birdly", "Hey bird-dude, I saw Winston talkin to you."), new Line("Helpful Birdly", "You know, as you gain shiny stuff, you're going to attract more attention. To keep up, you'll need some tricks."), new GetWingFlap(), new Line("Helpful Birdly", "If you press X, you can flap your wings and blow all sorts of stuff around! Try it on plants or sand piles!")}),
-        new Milestone(5, "Main-FlapHelp", null),
+        new Milestone(5, birdType: BirdType.Red, directions:  new List<Direction>{new Line("Winston \"Collecto\"", "Hmm. I see you found a paltry sum of shiny objects."), new Line("Winston \"Collecto\"", "UNFORTUNATELY. YOU WILL BE NO MATCH FOR MY COOL COLLECTION!"), /*TODO Show many baubles on person. Open wings.*/ new Line("Winston \"Collecto\"", "Have fun. Don't overwork yourself too much, bird.")}),
+        new Milestone(5, directions:  new List<Direction>{new Line("Pokey", "Hey bird-dude, I saw Winston talkin to you."), new Line("Pokey", "You know, as you gain shiny stuff, you're going to attract more attention. To keep up, you'll need some tricks."), new GetWingFlap(), new Line("Pokey", "If you press X, you can flap your wings and blow all sorts of stuff around! Try it on plants or sand piles!")}),
+        new Milestone(5, "Main-FlapHelp"),
 
-        new Milestone(10, "Main-Mayor", new List<Direction>{new Line("Mayor Brachie", "Hello, I am the bird-mayor of the nearby town. I am going around looking for birds that still need a group to head down south."), new Line("Mayor Brachie", "Come talk to me if you'd like to head out. I'll be over near the water.")}),
+        new Milestone(10, "Main-Mayor", directions: new List<Direction>{new Line("Mayor Brachie", "Hello, I am the bird-mayor of the nearby town. I am going around looking for birds that still need a group to head down south."), new Line("Mayor Brachie", "Come talk to me if you'd like to head out. I'll be over near the water.")}),
     };
 
     public static List<Milestone> ExecutedMilestones = new List<Milestone>(); 
@@ -189,6 +192,15 @@ public class Nest : MonoBehaviour
                     var go = Instantiate(CutsceneBird, OtherBirdStart.transform.position, Quaternion.identity) as GameObject;
                     var bird = go.GetComponent<CutsceneBird>();
 
+                    if (mileStone.BirdType == BirdType.Green)
+                    {
+                        bird.GetComponent<Animator>().runtimeAnimatorController = GreenAnimatorController;
+                    }
+                    if (mileStone.BirdType == BirdType.Red)
+                    {
+                        bird.GetComponent<Animator>().runtimeAnimatorController = RedAnimatorController;
+                    }
+   
                     yield return StartCoroutine(bird.WalkToTarget(OtherBirdEnd.transform.position));
                     // Walk bird from off-cam to on cam
                     
