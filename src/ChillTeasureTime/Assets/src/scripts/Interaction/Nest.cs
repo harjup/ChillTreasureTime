@@ -66,18 +66,14 @@ public class Nest : MonoBehaviour
         var shinyBitsTransform = transform
           .FindChild("ShinyBits");
 
-
-        var c = 0;
         foreach (Transform t in shinyBitsTransform)
         {
             t.gameObject.SetActive(false);
-
-            if (c + 1 <= State.Instance.StoredShinyCount)
+            var amount = int.Parse(t.name);
+            if (amount <= State.Instance.StoredShinyCount)
             {
                 t.gameObject.SetActive(true);
             }
-
-            c++;
         }
     }
 
