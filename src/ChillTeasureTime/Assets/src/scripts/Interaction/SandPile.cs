@@ -17,7 +17,7 @@ public class SandPile : CanInteract
     public GameObject Sprite;
 
     private int count;
-    public int MaxCount = 3;
+    public int MaxCount = 1;
 
   
     void Start()
