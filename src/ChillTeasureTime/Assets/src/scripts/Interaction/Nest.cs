@@ -25,7 +25,8 @@ public class Nest : MonoBehaviour
 
     public GameObject CanDepositObject;
 
-    public List<Milestone> Milestones = new List<Milestone>
+    // We want our list to persist over time
+    public static List<Milestone> Milestones = new List<Milestone>
     {
         new Milestone(1, null, new List<Direction>{new Line("Helpful Birdly", "Ah. Hello! Another straggler! Staying warm in this cold weather?"), new Line("Helpful Birdly", "Most other birds have already gone south for the winter."), new Line("Helpful Birdly", "That's a nice bauble you found there. With enough of those, you could attract a bird-crew to head south with you.")}),
         new Milestone(1, "Main-JumpHelper", null),
@@ -38,6 +39,8 @@ public class Nest : MonoBehaviour
 
         new Milestone(10, "Main-Mayor", new List<Direction>{new Line("Mayor Brachie", "Hello, I am the bird-mayor of the nearby town. I am going around looking for birds that still need a group to head down south."), new Line("Mayor Brachie", "Come talk to me if you'd like to head out. I'll be over near the water.")}),
     };
+
+    public static List<Milestone> ExecutedMilestones = new List<Milestone>(); 
 
     public void Start()
     {
@@ -54,6 +57,21 @@ public class Nest : MonoBehaviour
         UpdateShinyDisplay();
 
         _guiCanvas = GuiCanvas.Instance;
+
+        foreach (var mileStone in ExecutedMilestones)
+        {
+            if (mileStone.Id != null)
+            {
+                var birdSpawn = FindObjectsOfType<BirdSpawn>().FirstOrDefault(b => b.Id == mileStone.Id);
+                if (birdSpawn == null)
+                {
+                    Debug.LogError("Expected BirdSpawn With Id '" + mileStone.Amount + "'");
+                    continue;
+                }
+
+                birdSpawn.SpawnBird();
+            }
+        }
     }
 
     public void Update()
@@ -141,6 +159,7 @@ public class Nest : MonoBehaviour
 
             foreach (var mileStone in mileStones)
             {
+                ExecutedMilestones.Add(mileStone);
                 Milestones.Remove(mileStone);
 
                 if (mileStone.Id != null)

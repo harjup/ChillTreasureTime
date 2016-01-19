@@ -19,7 +19,7 @@ public class EndCanvas : MonoBehaviour
             new RevealAndShake("TrashCollectedCount", State.Instance.PlayerShinyCount[CollectableType.Worthless].ToString()),
             new Reveal("TrashWorth"),
             new CrawlText("TimePlayed"),
-            new RevealAndShake("TimePlayedCount", ((int)State.Instance.TimeElapsed).ToString()),
+            new RevealAndShake("TimePlayedCount", (State.Instance.TimeElapsed / 60d).ToString("0.00")),
             new Reveal("TimePlayedMinutes"),
             new CrawlText("Rank"),
             new RevealAndShake("RankValue"),
@@ -70,20 +70,25 @@ public class EndCanvas : MonoBehaviour
                 if (shake.Name == "RankValue")
                 {
                     var textUi = target.GetComponent<Text>();
-                    var timeInSeconds = State.Instance.TimeElapsed;
+                    var timeInSeconds = (State.Instance.TimeElapsed / 60d);
                     var treasures = State.Instance.StoredShinyCount;
                     var trash = State.Instance.PlayerShinyCount[CollectableType.Worthless];
 
                     textUi.text = "Cool Dude";
 
-                    if (timeInSeconds > 1200)
+                    if (timeInSeconds > 10)
                     {
                         textUi.text = "Away From Keyboard";
                     }
 
-                    if (timeInSeconds < 60)
+                    if (timeInSeconds < 2)
                     {
                         textUi.text = "Speed Runner";
+                    }
+
+                    if (treasures >= 15)
+                    {
+                        textUi.text = "Collector";
                     }
 
                     if (treasures >= 30)
@@ -91,7 +96,7 @@ public class EndCanvas : MonoBehaviour
                         textUi.text = "Hoarder";
                     }
 
-                    if (trash >= 30)
+                    if (trash >= 15)
                     {
                         textUi.text = "Best Janitor";
                     }
