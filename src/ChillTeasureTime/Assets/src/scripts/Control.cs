@@ -9,6 +9,7 @@ public class Control : MonoBehaviour
     private Collider _collider;
     private Rigidbody _rigidbody;
     private GroundCheck _groundCheck;
+    private ParticleSystem _particleSystem;
 
     public float BaseSpeed = 8;
 
@@ -57,6 +58,9 @@ public class Control : MonoBehaviour
     // Use this for initialization
 	void Start ()
 	{
+	    _particleSystem = GetComponentInChildren<ParticleSystem>();
+	    _particleSystem.playbackSpeed = 4;
+        _particleSystem.gameObject.SetActive(false);
 	    _rigidbody = GetComponent<Rigidbody>();
 	    _animator = GetComponentInChildren<Animator>();
 	    _groundCheck = GetComponentInChildren<GroundCheck>();
@@ -94,6 +98,8 @@ public class Control : MonoBehaviour
             else if (State.Instance.PowerList.Contains(Power.WingFlap))
             {
                 _animator.SetTrigger("ToWingFlap");
+                _particleSystem.gameObject.SetActive(false);
+                _particleSystem.gameObject.SetActive(true);
                 var firstBlow = CurrentInteractables.FirstOrDefault(i => i is CanBlow);
                 if (firstBlow != null)
                 {
@@ -167,10 +173,12 @@ public class Control : MonoBehaviour
 	    if (xVel > 0)
 	    {
 	        _animator.transform.localScale = _animator.transform.localScale.SetX(1);
+	        _particleSystem.transform.rotation = Quaternion.Euler(0, 90, 0);
 	    }
 	    else if (xVel < 0)
 	    {
             _animator.transform.localScale = _animator.transform.localScale.SetX(-1);
+            _particleSystem.transform.rotation = Quaternion.Euler(0, -90, 0);
 	    }
 	}
 
