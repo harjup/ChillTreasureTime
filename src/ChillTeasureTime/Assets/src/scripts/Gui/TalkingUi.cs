@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Linq;
-using UnityEditor;
 using UnityEngine.UI;
 
 public class TalkingUi : MonoBehaviour

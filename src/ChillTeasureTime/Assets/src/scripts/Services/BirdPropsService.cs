@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 
 public class BirdPropsService : Singleton<BirdPropsService>
 {
 
-    public AnimatorController RedBirdAnimatorController;
-    public AnimatorController GreenBirdAnimatorController;
+    public RuntimeAnimatorController RedBirdAnimatorController;
+    public RuntimeAnimatorController GreenBirdAnimatorController;
 
     public static Dictionary<string, BirdProps> BirdPropses;
 

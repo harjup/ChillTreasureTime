@@ -97,7 +97,7 @@ public class Bird : MonoBehaviour, IExaminable
             if (direction is LeaveChoicePrompt)
             {
                 _guiCanvas.EnableChoice();
-                yield return new WaitForEndOfFrame();
+                yield return new WaitForSeconds(.1f);
                 var result = false;
                 yield return StartCoroutine(_guiCanvas.ChoiceUi.WaitForPlayerChoice(res =>
                 {
