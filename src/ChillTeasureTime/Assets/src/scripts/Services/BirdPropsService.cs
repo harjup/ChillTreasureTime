@@ -18,6 +18,8 @@ public class BirdPropsService : Singleton<BirdPropsService>
                 {"Main-Observer", new BirdProps("RestPose", false, GreenBirdAnimatorController)},
                 {"Main-JumpHelper", new BirdProps("RestPoseFront", false, null)},
                 {"Lighthouse-Treasure", new BirdProps("RestPoseFront", false, GreenBirdAnimatorController)},
+                //Flap
+                {"Main-FlapHelp", new BirdProps("Flap", false, null)},
             };
         }
 
