@@ -32,7 +32,7 @@ public class SandPile : CanInteract
         }
 
         count = CollectedCounts[Guid];
-
+        
         ShineySpawnLocation.transform.SetParent(null);
 
         if (ClearedPiles.Contains(Guid))
@@ -40,9 +40,9 @@ public class SandPile : CanInteract
             Destroy(Sprite);
             Destroy(BlockingCollider);
 
-            if (count < MaxCount)
+            if (count == 0)
             {
-                StartCoroutine(SpawnShinysWithDelay(MaxCount - count));
+                StartCoroutine(SpawnShinysWithDelay(1));
             }
         }
     }
