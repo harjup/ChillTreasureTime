@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 
 public enum CollectableType
@@ -17,6 +19,22 @@ public class Collectable : MonoBehaviour
     public CollectableType MyType;
 
     public static bool ShineyHasBeenCollected = false;
+
+    public List<Sprite> GoodSprites;
+    public List<Sprite> TrashSprites;
+
+    public void Start()
+    {
+        if (MyType == CollectableType.Good)
+        {
+            GetComponent<SpriteRenderer>().sprite = GoodSprites.AsRandom().ToList().First();
+        }
+        if (MyType == CollectableType.Worthless)
+        {
+            GetComponent<SpriteRenderer>().sprite = TrashSprites.AsRandom().ToList().First();
+        }
+        
+    }
 
     public void SetCallback(Action cb)
     {
