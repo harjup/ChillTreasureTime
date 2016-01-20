@@ -6,9 +6,11 @@ public enum LevelEntrance
     Unknown,
     Start,
     BeachLeft,
+    BeachRival,
     BeachRight,
     Lighthouse,
-    VilliageLeft
+    VilliageLeft,
+    Dance
 }
 
 public class LevelLoader : Singleton<LevelLoader>
@@ -20,6 +22,7 @@ public class LevelLoader : Singleton<LevelLoader>
         switch (levelEntrance)
         {
             case LevelEntrance.BeachLeft:
+            case LevelEntrance.BeachRival:
             case LevelEntrance.BeachRight:
                 Application.LoadLevel("Main");
                 break;

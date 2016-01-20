@@ -22,6 +22,17 @@ public class MusicService : Singleton<MusicService>
         PrimaryAudioSource.Play();
     }
 
+    public void TransitionToFight()
+    {
+        DOTween.Sequence()
+            .Append(PrimaryAudioSource.DOFade(0f, .5f))
+            .AppendCallback(() =>
+            {
+                PrimaryAudioSource.clip = Lighthouse;
+                PrimaryAudioSource.Stop();
+            });
+    }
+
     public void TransitionToLighthouse()
     {
         DOTween.Sequence()
@@ -56,6 +67,11 @@ public class MusicService : Singleton<MusicService>
         if (Application.loadedLevelName == "Main")
         {
             TransitionToBeachSnow();
+        }
+
+        if (Application.loadedLevelName == "Fight")
+        {
+            TransitionToFight();
         }
     }
 

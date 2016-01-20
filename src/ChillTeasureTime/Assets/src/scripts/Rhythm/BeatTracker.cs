@@ -62,7 +62,14 @@ public class PlayerBeat : Beat
     }
 }
 
-public class BeatTracker : MonoBehaviour, IBeat, IBar
+public class FadeOutBeat : Beat
+{
+    public FadeOutBeat(int bar, int beat) : base(bar, beat)
+    {
+    }
+}
+
+public class BeatTracker : MonoBehaviour, IBeat
 {
     private Beat _currentBeat;
 
@@ -186,7 +193,9 @@ public class BeatTracker : MonoBehaviour, IBeat, IBar
         new PlayerBeat(49, 2),
         new PlayerBeat(49, 3),
         new PlayerBeat(49, 4),
-        new PlayerEndBeat(50, 2)
+        new PlayerEndBeat(50, 2),
+        
+        new FadeOutBeat(54, 1)
     };
 
     public RhythmRival RhythmRival;
@@ -202,7 +211,6 @@ public class BeatTracker : MonoBehaviour, IBeat, IBar
                 RhythmBird.Whoops();
             }
         }
-
 
         var localBeat = beat - (bar - 1) * 4;
         _currentBeat = _beatSequence.FirstOrDefault(b => b.BarNumber == bar && b.BeatNumber == localBeat);
@@ -227,7 +235,20 @@ public class BeatTracker : MonoBehaviour, IBeat, IBar
                 CountDownService.Instance.EndOfSet();
                 RhythmBird.EndAnim();
             }
+
+            if (b is FadeOutBeat)
+            {
+                StartCoroutine(EndScene());
+            }
         }
+    }
+
+    IEnumerator EndScene()
+    {
+        yield return SceneFadeInOut.Instance.EndScene();
+        FindObjectOfType<Player>().EnableControl();
+        GuiCanvas.Instance.EnableOverworldUi();
+        LevelLoader.Instance.LoadLevel(LevelEntrance.BeachRival);
     }
 
     public void OnValidInputForBeat(float time, float tolerance)

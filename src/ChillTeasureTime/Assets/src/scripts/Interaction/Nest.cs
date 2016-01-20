@@ -34,6 +34,8 @@ public class Nest : MonoBehaviour
         new Milestone(1, birdType: BirdType.Green, directions: new List<Direction>{new Line("Rocko", "Ah. Hello! Another straggler! Staying warm in this cold weather?"), new Line("Rocko", "Most other birds have already gone south for the winter."), new Line("Rocko", "That's a nice bauble you found there. With enough of those, you could attract a bird-crew to head south with you.")}),
         new Milestone(1, "Main-JumpHelper"),
         new Milestone(1, "Main-Observer"),
+        new Milestone(1, "Rival"),
+        
 
         new Milestone(5, birdType: BirdType.Red, directions:  new List<Direction>{new Line("Winston \"Collecto\"", "Hmm. I see you found a paltry sum of shiny objects."), new Line("Winston \"Collecto\"", "UNFORTUNATELY. YOU WILL BE NO MATCH FOR MY COOL COLLECTION!"), /*TODO Show many baubles on person. Open wings.*/ new Line("Winston \"Collecto\"", "Have fun. Don't overwork yourself too much, bird.")}),
         new Milestone(5, directions:  new List<Direction>{new Line("Pokey", "Hey bird-dude, I saw Winston talkin to you."), new Line("Pokey", "You know, as you gain shiny stuff, you're going to attract more attention. To keep up, you'll need some tricks."), new GetWingFlap(), new Line("Pokey", "If you press X, you can flap your wings and blow all sorts of stuff around! Try it on plants or sand piles!")}),

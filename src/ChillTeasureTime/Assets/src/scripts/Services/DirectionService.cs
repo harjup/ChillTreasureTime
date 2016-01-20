@@ -60,6 +60,9 @@ public class DirectionService : Singleton<DirectionService>
             new Line("Johnny", "My name is Johnny."),
             new Line("Johnny", "..."),
             new Line("Johnny", "I want to be a pirate.")
+        }},
+        {"Rival", new List<Direction>{
+            new LoadFight()
         }}
     };
 

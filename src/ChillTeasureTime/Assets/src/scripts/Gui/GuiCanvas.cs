@@ -48,6 +48,16 @@ public class GuiCanvas : Singleton<GuiCanvas>
         OverworldUi.SetActive(true);
     }
 
+
+
+    public void OnLevelWasLoaded(int level)
+    {
+        if (Application.loadedLevelName == "Fight")
+        {
+            OverworldUi.SetActive(false);
+        }
+    }
+
     private void EnableTitleCard()
     {
         DisableAll();
