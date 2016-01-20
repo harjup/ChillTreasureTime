@@ -63,7 +63,7 @@ public class CameraMove : MonoBehaviour
         // TODO: Maybe let's use DoTween and have it be reasonably smooth instead of falling on our old iTween business
         var positionDifference = targetTransform.position - cameraTransform.position;
         float xSpeed = Mathf.Abs(positionDifference.x) * cameraSnapX;
-        float ySpeed = Mathf.Abs(positionDifference.y) * cameraSnapY;
+        //float ySpeed = Mathf.Abs(positionDifference.y) * cameraSnapY;
         float zSpeed = Mathf.Abs(positionDifference.z) * cameraSnapZ;
 
         //Cap the camera's speed so it doesn't go fucking nuts and start overshooting the player

@@ -6,12 +6,19 @@ public class UserInput : MonoBehaviour
 {
     public event ButtonPressed XButtonPressed;
 
+    private bool buttonDown = false;
     [UsedImplicitly]
-	void Update()
+	void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKey(KeyCode.X) && !buttonDown)
         {
             OnXButtonPressed();
+            buttonDown = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            buttonDown = false;
         }
     }
 

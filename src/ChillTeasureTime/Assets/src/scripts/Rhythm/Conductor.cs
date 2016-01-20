@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine.VR;
@@ -8,8 +10,8 @@ using UnityEngine.VR;
 public class Conductor : MonoBehaviour
 {
     public AudioSource song;
-    private int crotchetsperbar = 8;
-    private float bpm = 145f;
+    private int crotchetsperbar = 4;
+    private float bpm = 150f;
 
     public float Crotchet
     {
@@ -37,33 +39,23 @@ public class Conductor : MonoBehaviour
     [SerializeField] private AudioSource _successAudio;
     [SerializeField] private AudioSource _failureAudio;
 
+    List<IBeat> beatEntitiyList = new List<IBeat>();
+    List<IBar> barEntitiyList = new List<IBar>();
+
     public void Start()
     {
         _successAudio.clip.LoadAudioData();
         _failureAudio.clip.LoadAudioData();
-        /*if (!hasoffsetadjusted)
-	    {
-	        if (Application.platform == RuntimePlatform.OSXWebPlayer)
-	            offset = 0.35f;
-	        if (Application.platform == RuntimePlatform.WindowsWebPlayer)
-	            offset = 0.45f;
-	    }*/
-
-        //offset = offsetstatic;
-
-        //AudioSource[] sounds = GetComponents<AudioSource>();
-        //song = sounds[0];
-
-        /*lasthit = 3.0f / 2.0f * crotchet;
-
-		Debug.Log ("crotch" + crotchet);
-		Debug.Log (lasthit);*/
+     
         nextbeattime = 0;
         nextbartime = 0;
 
         StartMusic();
 
         FindObjectOfType<UserInput>().XButtonPressed += OnInput;
+
+        beatEntitiyList = FindObjectsOfType<MonoBehaviour>().Where(m => m is IBeat).Cast<IBeat>().ToList();
+        barEntitiyList = FindObjectsOfType<MonoBehaviour>().Where(m => m is IBar).Cast<IBar>().ToList();
     }
 
     private void StartMusic()
@@ -73,32 +65,9 @@ public class Conductor : MonoBehaviour
 
 
     [UsedImplicitly]
-    public void Update()
+    public void FixedUpdate()
     {
         CheckSongPosition();
-        /*if (scrController.debug)
-			{
-
-				if (Input.GetKeyDown(KeyCode.LeftArrow))
-				    {
-				    	offset -= 0.01f;
-				offsetstatic = offset;
-				hasoffsetadjusted = true;
-					}
-				
-				if (Input.GetKeyDown(KeyCode.RightArrow))
-				    {
-				    	offset += 0.01f;
-					offsetstatic = offset;
-				hasoffsetadjusted = true;
-				    }
-
-			txtOffset.enabled = true;
-			txtOffset.text = offset.ToString();
-			}*/
-
-        /*if (beatnumber >= 3 || !scrController.isgameworld)
-						scrController.started = true;*/
     }
 
     public void CheckSongPosition()
@@ -132,48 +101,46 @@ public class Conductor : MonoBehaviour
         var nextBeatValid = current > minTimeNext && current < maxTimeNext;
         var prevBeatValid = current > minTimePrev && current < maxTimePrev;
 
-        var result = nextBeatValid || prevBeatValid ? "true" : "false";
-
-        Debug.Log(
-            string.Format("({0} < {1} > {2}) || ({3} > {1} > {4}) = {5}", 
-            minTimeNext, 
-            current, 
-            maxTimeNext,
-            minTimePrev, 
-            maxTimePrev,
-            result));
-
         return nextBeatValid || prevBeatValid;
     }
 
+    public BeatTracker BeatTracker;
+
     public void OnInput(object caller)
     {
-        if (CheckIfInputTimeIsValid(Songposition))
+        BeatTracker.OnValidInputForBeat(Songposition, (Crotchet / 4f));
+
+        /*if (CheckIfInputTimeIsValid(Songposition))
         {
-            _successAudio.Play();
+            BeatTracker.OnValidInputForBeat(Songposition, (Crotchet / 2f));
+            //_successAudio.Play();
         }
         else
         {
-            _failureAudio.Play();
-        }
+            //BeatTracker.OnInValidInputBeat();
+        }*/
     }
+
+
+
+    private BeatTracker _beatTracker;
 
 
     private void OnBeat()
     {
-        //FindObjectOfType<VisualCoordinator>().SpriteContainer.IncrementActive();
-        GameObject[] arrBeat = GameObject.FindGameObjectsWithTag("Beat");
-			foreach (GameObject objBeat in arrBeat) {
-				objBeat.SendMessage ("OnBeat");
-			}
+        Debug.Log(beatnumber);
+
+	    foreach (IBeat objBeat in beatEntitiyList) {
+		    objBeat.OnBeat(barnumber, beatnumber);
+	    }
     }
 
     private void OnBar()
     {
-        transform.DOShakePosition(.05f, Vector3.one);
-        /*GameObject[] arrBar = GameObject.FindGameObjectsWithTag("Bar");
-			foreach (GameObject objBar in arrBar) {
-				objBar.SendMessage ("OnBar");
-			}*/
+        //transform.DOShakePosition(.05f, Vector3.one);
+        foreach (var obj in barEntitiyList)
+        {
+            obj.OnBar(barnumber);
+        }
     }
 }

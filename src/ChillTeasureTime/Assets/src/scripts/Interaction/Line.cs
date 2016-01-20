@@ -16,6 +16,11 @@ public class Line : Direction
     
 }
 
+public class GreenBirdVisual : Direction
+{
+    
+}
+
 public class GetWingFlap : Line
 {
     public GetWingFlap() : base("", "Got Wing Flap!")

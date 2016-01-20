@@ -2,50 +2,85 @@
 using System.Collections;
 using DG.Tweening;
 
-public class RhythmBird : MonoBehaviour
+public class RhythmBird : MonoBehaviour, IBeat
 {
-    private AudioSource audioSource;
-    private Animator animator;
-    private Conductor conductor;
-
     public GameObject Plant;
+
+    private Animator _animator;
+    private AudioSource _audioSource;
+    private AudioSource _failAudioSource;
+
+    public Animator Animator
+    {
+        get
+        {
+            if (_animator == null)
+            {
+                _animator = GetComponent<Animator>();
+            }
+
+            return _animator;
+        }
+    }
 
 	void Start ()
 	{
-        audioSource = GetComponent<AudioSource>();
-	    animator = GetComponent<Animator>();
-	    conductor = FindObjectOfType<Conductor>();
+        _audioSource = GetComponent<AudioSource>();
+	    _failAudioSource = transform.FindChild("Whoops").GetComponent<AudioSource>();
+	    _animator = GetComponent<Animator>();
 	}
 
 
-    private int beatNumber = 0;
-    public void OnBeat()
+    public void OnBeat(int bar, int beat)
     {
-        beatNumber++;
-        if (beatNumber == 4)
+        /*if (beat == 4)
         {
-            beatNumber = 0;
             animator.CrossFade("WingReady", 0f);
             return;
-        }
+        }*/
         
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("WingReady"))
+        /*if (animator.GetCurrentAnimatorStateInfo(0).IsName("WingReady"))
         {
             animator.SetTrigger("PushButtonFailed");
             return;
-        }
+        }*/
 
-        animator.SetTrigger("OnBeat");
+        Animator.SetTrigger("OnBeat");
     }
 
     public void Update()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("WingReady")
+       /* if (animator.GetCurrentAnimatorStateInfo(0).IsName("WingReady")
             && Input.GetKeyDown(KeyCode.X))
         {
             audioSource.Play();
             animator.SetTrigger("PushedButton");
             Plant.transform.DOShakePosition(.25f, .25f, 30);
+        }*/
+    }
+
+    public void Peck()
+    {
+        Debug.Log("Peck");
+        if (Animator.GetCurrentAnimatorStateInfo(0).IsName("Peck"))
+        {
+            // This will reset the animation despite already being on it, the alternatives do not
+            Animator.ForceStateNormalizedTime(0f);
         }
+        Animator.CrossFade("Peck", 0f);
+        _audioSource.Play();
+    }
+
+    public void Whoops()
+    {
+        Debug.Log("EWhoops");
+        if (Animator.GetCurrentAnimatorStateInfo(0).IsName("Peck"))
+        {
+            // This will reset the animation despite already being on it, the alternatives do not
+            Animator.ForceStateNormalizedTime(0f);
+        }
+
+        Animator.CrossFade("Peck", 0f);
+        _failAudioSource.Play();
     }
 }
