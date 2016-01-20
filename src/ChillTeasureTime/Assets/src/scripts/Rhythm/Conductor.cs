@@ -108,7 +108,7 @@ public class Conductor : MonoBehaviour
 
     public void OnInput(object caller)
     {
-        BeatTracker.OnValidInputForBeat(Songposition, (Crotchet / 4f));
+        BeatTracker.OnValidInputForBeat(Songposition, (Crotchet / 2f));
 
         /*if (CheckIfInputTimeIsValid(Songposition))
         {
@@ -128,8 +128,6 @@ public class Conductor : MonoBehaviour
 
     private void OnBeat()
     {
-        Debug.Log(beatnumber);
-
 	    foreach (IBeat objBeat in beatEntitiyList) {
 		    objBeat.OnBeat(barnumber, beatnumber);
 	    }

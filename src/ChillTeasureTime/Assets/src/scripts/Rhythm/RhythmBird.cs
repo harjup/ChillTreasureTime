@@ -4,6 +4,11 @@ using DG.Tweening;
 
 public class RhythmBird : MonoBehaviour, IBeat
 {
+    public int SuccessCount { get; set; }
+    public int MistakeCount { get; set; }
+
+    public int MistakesInRound { get; set; }
+
     public GameObject Plant;
 
     private Animator _animator;
@@ -82,5 +87,21 @@ public class RhythmBird : MonoBehaviour, IBeat
 
         Animator.CrossFade("Peck", 0f);
         _failAudioSource.Play();
+        MistakesInRound++;
+    }
+
+    public void EndAnim()
+    {
+        if (MistakesInRound <= 1)
+        {
+            Animator.CrossFade("RhythmSuccess", 0f);
+            SuccessCount++;
+        }
+        else
+        {
+            Animator.CrossFade("RhythmFail", 0f);
+            MistakeCount++;
+        }
+
     }
 }
