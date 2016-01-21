@@ -66,6 +66,17 @@ public class DirectionService : Singleton<DirectionService>
             new Line("Winston \"Collecto\"", "Ah! I you're here to challenge me!"),
             new Line("Winston \"Collecto\"", "Ready to tango?"),
             new FightChoicePrompt()
+        }},
+        {"Villiage-Rival", new List<Direction>{
+            //
+            new Line("Winston \"Collecto\"", "Wow, you found my special training spot. This is where I survey the whole beach to look for shiny bits and bobs."),
+            new Line("Winston \"Collecto\"", "I left a couple easy ones lying around here for you, I prefer more challenge to my collecting.")
+        }},
+        {"Villiage-Poppy", new List<Direction>{
+            //
+            new Line("Poppy", "I was going to head out earlier, but I'm still waiting on a friend."),
+            new Line("Poppy", "Hopefully they'll get here before my feathers freeze off."),
+            new FightChoicePrompt()
         }}
     };
 

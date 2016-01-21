@@ -21,6 +21,8 @@ public class BirdPropsService : Singleton<BirdPropsService>
                 //Flap
                 {"Main-FlapHelp", new BirdProps("Flap", false, null)},
                 {"Rival", new BirdProps("Idle", false, RedBirdAnimatorController)},
+                {"Villiage-Rival", new BirdProps("Idle", false, RedBirdAnimatorController)},
+                {"Villiage-Poppy", new BirdProps("RestPoseFront", false, GreenBirdAnimatorController)},
             };
         }
 

@@ -30,7 +30,7 @@ public class LevelLoader : Singleton<LevelLoader>
                 Application.LoadLevel("Lighthouse");
                 break;
             case LevelEntrance.VilliageLeft:
-                Application.LoadLevel("Villiage");
+                Application.LoadLevel("Village");
                 break;
             default:
                 Debug.LogError("Level entrance type " + levelEntrance + " not supported");
