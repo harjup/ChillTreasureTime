@@ -76,19 +76,15 @@ public class EndCanvas : MonoBehaviour
 
                     textUi.text = "Cool Dude";
 
-                    if (timeInSeconds > 10)
-                    {
-                        textUi.text = "Away From Keyboard";
-                    }
-
-                    if (timeInSeconds < 2)
-                    {
-                        textUi.text = "Speed Runner";
-                    }
-
+                   
                     if (treasures >= 15)
                     {
                         textUi.text = "Collector";
+                    }
+
+                    if (trash >= 10)
+                    {
+                        textUi.text = "Best Janitor";
                     }
 
                     if (treasures >= 30)
@@ -96,9 +92,14 @@ public class EndCanvas : MonoBehaviour
                         textUi.text = "Hoarder";
                     }
 
-                    if (trash >= 15)
+                    if (timeInSeconds < 2)
                     {
-                        textUi.text = "Best Janitor";
+                        textUi.text = "Speed Runner";
+                    }
+
+                    if (timeInSeconds > 10)
+                    {
+                        textUi.text = "Away From Keyboard";
                     }
                 }
 
