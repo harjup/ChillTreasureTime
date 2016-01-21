@@ -51,7 +51,8 @@ public class Player : MonoBehaviour
 
         if (Application.loadedLevelName == "Fight" 
             || Application.loadedLevelName == "End" 
-            || State.Instance.IsIntro)
+            || State.Instance.IsIntro 
+            || State.Instance.LevelEntrance == LevelEntrance.BeachRival)
         {
             _control.Disabled = true;
         }
@@ -89,7 +90,7 @@ public class Player : MonoBehaviour
 
     public void StartLevelTransitionIn(PlayerStart start)
     {
-        if (start.LevelEntrance == LevelEntrance.Start)
+        if (start.LevelEntrance == LevelEntrance.Start || start.LevelEntrance == LevelEntrance.BeachRival)
         {
             transform.position = start.transform.position;
             return;

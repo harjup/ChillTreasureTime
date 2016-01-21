@@ -26,6 +26,8 @@ public class State : Singleton<State>
 
     public int StoredShinyCount;
     public readonly List<Sequence> ImportantSequences = new List<Sequence>();
+    public int SuccessBeats { get; set; }
+    public int FailedBeats { get; set; }
 
     public void SetLevelEntrance(LevelEntrance levelEntrance)
     {

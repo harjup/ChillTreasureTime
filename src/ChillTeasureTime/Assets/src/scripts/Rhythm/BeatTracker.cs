@@ -119,7 +119,6 @@ public class BeatTracker : MonoBehaviour, IBeat
         new PlayerBeat(18, 3),
         new PlayerBeat(19, 1),
         new PlayerBeat(19, 3),
-
         new PlayerEndBeat(20, 2),
         
         new RivalBeat(21, 1),
@@ -195,7 +194,7 @@ public class BeatTracker : MonoBehaviour, IBeat
         new PlayerBeat(49, 4),
         new PlayerEndBeat(50, 2),
         
-        new FadeOutBeat(54, 1)
+        new FadeOutBeat(51, 1)
     };
 
     public RhythmRival RhythmRival;
@@ -245,6 +244,10 @@ public class BeatTracker : MonoBehaviour, IBeat
 
     IEnumerator EndScene()
     {
+        State.Instance.SuccessBeats = RhythmBird.SuccessCount;
+        State.Instance.FailedBeats = RhythmBird.MistakeCount;
+
+
         yield return SceneFadeInOut.Instance.EndScene();
         FindObjectOfType<Player>().EnableControl();
         GuiCanvas.Instance.EnableOverworldUi();

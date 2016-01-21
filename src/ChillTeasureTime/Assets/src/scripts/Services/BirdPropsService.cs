@@ -20,6 +20,7 @@ public class BirdPropsService : Singleton<BirdPropsService>
                 {"Lighthouse-Treasure", new BirdProps("RestPoseFront", false, GreenBirdAnimatorController)},
                 //Flap
                 {"Main-FlapHelp", new BirdProps("Flap", false, null)},
+                {"Rival", new BirdProps("Idle", false, RedBirdAnimatorController)},
             };
         }
 

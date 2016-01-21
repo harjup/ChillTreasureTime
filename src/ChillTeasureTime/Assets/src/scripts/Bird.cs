@@ -46,8 +46,65 @@ public class Bird : MonoBehaviour, IExaminable
 
         _animator.CrossFade(_birdProps.DefaultAnim, 0f);
         _animator.transform.localScale = 
-            _animator.transform.localScale.SetX(_birdProps.FaceLeft ? 1 : -1);
+                _animator.transform.localScale.SetX(_birdProps.FaceLeft ? 1 : -1);
+
+
+        if (State.Instance.LevelEntrance == LevelEntrance.BeachRival && TextId == "Rival")
+        {
+            var lossDialog = new List<Direction>
+            {
+                new Line("Winson \"Collecto\"", "Woof. Erm, Chirp. Not the best dancing I've seen."),
+                new Line("Winson \"Collecto\"", "We can go again any time. You may need to practice.")
+            };
+
+            var perfectDialog = new List<Direction>
+            {
+                new Line("Winson \"Collecto\"", "Wow. Just wow. I am very impressed."),
+                new Line("Winson \"Collecto\"", "So, about your prize. It's the most prized and valuable thing to my name."),
+                new Line("Winson \"Collecto\"", "It's... my respect. You have my respect. Good job guy."),
+                new Line("Winson \"Collecto\"", "We can go again any time.")
+            };
+
+            var okDialog = new List<Direction>
+            {
+                new Line("Winson \"Collecto\"", "Pretty good. Not perfect, but pretty good."),
+                new Line("Winson \"Collecto\"", "You're an ok bird."),
+                new Line("Winson \"Collecto\"", "We can go again any time, if you'd like.")
+            };
+
+
+            Directions = new List<Direction>
+            {
+                new Line("Winson \"Collecto\"", "Wow. Just wow. I am very impressed."),
+                new Line("Winson \"Collecto\"", "So, about your prize. It's the most prized and valuable thing to my name."),
+                new Line("Winson \"Collecto\"", "It's... my respect. You have my respect. Good job guy."),
+                new Line("Winson \"Collecto\"", "We can go again any time.")
+            };
+
+            if (State.Instance.FailedBeats <= 5 
+                && State.Instance.FailedBeats > 2)
+            {
+                Directions = okDialog;
+            }
+            else if (State.Instance.FailedBeats <= 2)
+            {
+                Directions = perfectDialog;
+            }
+            else
+            {
+                Directions = lossDialog;
+            }
+
+            _animator.CrossFade("Talk", 0f);
+            StartCoroutine(StartSequence(() =>
+            {
+                Directions = DirectionService.Instance.GetDirectionsById(TextId);
+                FindObjectOfType<Control>().Disabled = false;
+                _animator.CrossFade("Idle", 0f);
+            }));
+        }
     }
+
 
     public IEnumerator StartSequence(Action doneCallback)
     {
@@ -92,6 +149,53 @@ public class Bird : MonoBehaviour, IExaminable
                 yield return new WaitForSeconds(.5f);
 
                 LevelLoader.Instance.LoadFight();
+            }
+
+            if (direction is FightChoicePrompt)
+            {
+                _guiCanvas.EnableChoice();
+                yield return new WaitForSeconds(.1f);
+                var result = false;
+                yield return StartCoroutine(_guiCanvas.ChoiceUi.WaitForPlayerChoice(res =>
+                {
+                    result = res;
+                }));
+                _guiCanvas.DisableChoice();
+
+                if (result)
+                {
+                    _animator.CrossFade("Talk", 0f);
+                    yield return StartCoroutine(_talkingUi.TextCrawl(
+                        new Line("Winston \"Collecto\"", "Ok, cool."),
+                        () =>
+                        {
+                            _animator.CrossFade("Idle", 0f);
+                        }));
+
+                    _animator.CrossFade("Talk", 0f);
+                    yield return StartCoroutine(_talkingUi.TextCrawl(
+                        new Line("Winston \"Collecto\"", "All you gotta do is watch what I do and copy my moves! Thinking about pressing an \"X\"ish button will make you peck the ground."),
+                        () =>
+                        {
+                            _animator.CrossFade("Idle", 0f);
+                        }));
+
+                    _animator.CrossFade("Talk", 0f);
+                    yield return StartCoroutine(_talkingUi.TextCrawl(
+                        new Line("Winston \"Collecto\"", "If you're having a hard time, try \"toggling\" the \"autoplay switch\" and let your body do the dancing!"),
+                        () =>
+                        {
+                            _animator.CrossFade("Idle", 0f);
+                        }));
+
+                    yield return SceneFadeInOut.Instance.EndScene();
+                    Application.LoadLevel("Fight");
+                }
+                else
+                {
+                    _animator.CrossFade("Talk", 0f);
+                    yield return StartCoroutine(_talkingUi.TextCrawl(new Line("Winston \"Collecto\"", "That's cool, I'm always open to get my groove on."), () => { _animator.CrossFade("Idle", 0f); }));
+                }
             }
 
             if (direction is LeaveChoicePrompt)

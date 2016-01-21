@@ -35,6 +35,10 @@ public class CameraFadeOut : Direction
 {
 }
 
+public class FightChoicePrompt : Direction
+{
+}
+
 public class LeaveChoicePrompt : Direction
 {
 }
