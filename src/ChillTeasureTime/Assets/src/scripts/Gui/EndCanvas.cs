@@ -97,7 +97,7 @@ public class EndCanvas : MonoBehaviour
                         textUi.text = "Speed Runner";
                     }
 
-                    if (timeInSeconds > 10)
+                    if (timeInSeconds > 30)
                     {
                         textUi.text = "Away From Keyboard";
                     }

@@ -41,7 +41,6 @@ public class Nest : MonoBehaviour
 
         new Milestone(10, "Main-Mayor", directions: new List<Direction>{new Line("Mayor Brachie", "Hello, I am the bird-mayor of the nearby town. I am going around looking for birds that still need a group to head down south."), new Line("Mayor Brachie", "Come talk to me if you'd like to head out. I'll be over near the water.")}),
 
-
         new Milestone(20, "Rival", BirdType.Red, new List<Direction>{new Line("Winston \"Collecto\"", "Wow, that's quite a collection! Almost as good as mine."), new Line("Winston \"Collecto\"", "If you really wanna impress me, meet me by the beach shore and you can show me your moves!")})
     };
 
