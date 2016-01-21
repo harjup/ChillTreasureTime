@@ -43,7 +43,7 @@ public class ItemSpawn : MonoBehaviour
             {
                 var lines = new List<Line>
                 {
-                    new Line("", "Wow! A shining coin! I should find a safe place to stash this.")
+                    new Line("", "Wow! A shining treasure! I should find a safe place to stash this.")
                 };
 
                 StartCoroutine(ShowText(lines));
