@@ -128,7 +128,7 @@ public class Control : MonoBehaviour
         var xVel = Input.GetAxisRaw("Horizontal") * BaseSpeed;
         var zVel = Input.GetAxisRaw("Vertical") * BaseSpeed;
 
-        var yVel = _rigidbody.velocity.y - (20 * Time.fixedDeltaTime);
+        var yVel = _rigidbody.velocity.y - (20 * Time.smoothDeltaTime);
 	    
 	    //if (Input.GetKeyDown(KeyCode.Z) && yVel < 1f) // It'd be neat to have a number of flaps allowed before you have to touch ground
         if (Input.GetKeyDown(KeyCode.Z) && _groundCheck.IsOnGround)

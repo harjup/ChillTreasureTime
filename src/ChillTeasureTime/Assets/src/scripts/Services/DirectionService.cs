@@ -75,8 +75,7 @@ public class DirectionService : Singleton<DirectionService>
         {"Villiage-Poppy", new List<Direction>{
             //
             new Line("Poppy", "I was going to head out earlier, but I'm still waiting on a friend."),
-            new Line("Poppy", "Hopefully they'll get here before my feathers freeze off."),
-            new FightChoicePrompt()
+            new Line("Poppy", "Hopefully they'll get here before my feathers freeze off.")
         }}
     };
 
