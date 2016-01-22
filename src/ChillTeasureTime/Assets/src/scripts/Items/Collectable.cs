@@ -23,6 +23,9 @@ public class Collectable : MonoBehaviour
     public List<Sprite> GoodSprites;
     public List<Sprite> TrashSprites;
 
+    public AudioClip OnCollectShiny;
+    public AudioClip OnCollectTrash;
+
     public void Start()
     {
         if (MyType == CollectableType.Good)
@@ -76,6 +79,15 @@ public class Collectable : MonoBehaviour
         }
 
         State.Instance.AddToPlayerItemCount(1, MyType);
+
+        if (MyType == CollectableType.Good)
+        {
+            SfxManager.Instance.PlayGetShiney();
+        }
+        else
+        {
+            SfxManager.Instance.PlayGetTrash();
+        }
         
         if (_callBack != null)
         {

@@ -57,6 +57,8 @@ public class TextCrawler : MonoBehaviour
 
             _textCallBack(_currentDisplayText);
 
+            SfxManager.Instance.PlayChirpClip();
+
             yield return new WaitForSeconds(.025f);
         }
 

@@ -8,19 +8,6 @@ public class DirectionService : Singleton<DirectionService>
     private readonly Dictionary<string, List<Direction>> _directionsMap = 
         new Dictionary<string, List<Direction>>
     {
-        {"1", 
-            new List<Direction>{
-                new Line("Tiny Bird", "Nice Bauble You Have Here."),
-                new Line("Tiny Bird", "You know, as you gain shiny stuff, you're going to attract more attention."),
-                new Line("Tiny Bird", "To do that, you'll need some tricks. Here's WING FLAP."),
-                new GetWingFlap(),
-                new Line("Tiny Bird", "If you press X, you can flap your wings and blow all sorts of stuff around! Try it on plants or sand piles!"),
-            }
-                },
-        {"2", 
-            new List<Direction>{new Line("Tiny Bird", "Im bird 2. Hello.")}},
-        {"3", 
-            new List<Direction>{new Line("Tiny Bird", "Im bird 3. Hello hello!")}},
         { "Main-JumpHelper", 
           new List<Direction>{
               new Line("Jupley", "Hmm. I bet you could jump on those rocks."), 
@@ -39,6 +26,7 @@ public class DirectionService : Singleton<DirectionService>
         {"Main-FlapHelp",
         new List<Direction>{
             new Line("Pokey", "I'm practicing my flaps."), 
+            new Line("Pokey", "\"X\"... \"X\"... \"X\"..."), 
             new Line("Pokey", "If I can flap hard enough at those sand piles, I can clear the way to the lighthouse!"), 
         }},
         {"Main-Mayor",

@@ -15,7 +15,7 @@ public class BirdPropsService : Singleton<BirdPropsService>
         {
             BirdPropses = new Dictionary<string, BirdProps>
             {
-                {"Main-Observer", new BirdProps("RestPose", false, GreenBirdAnimatorController)},
+                {"Main-Observer", new BirdProps("RestPose", true, GreenBirdAnimatorController)},
                 {"Main-JumpHelper", new BirdProps("RestPoseFront", false, null)},
                 {"Lighthouse-Treasure", new BirdProps("RestPoseFront", false, GreenBirdAnimatorController)},
                 //Flap

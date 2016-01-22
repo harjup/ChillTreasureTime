@@ -98,6 +98,7 @@ public class Control : MonoBehaviour
             else if (State.Instance.PowerList.Contains(Power.WingFlap))
             {
                 _animator.SetTrigger("ToWingFlap");
+                SfxManager.Instance.PlayWindClip();
                 _particleSystem.gameObject.SetActive(false);
                 _particleSystem.gameObject.SetActive(true);
                 var firstBlow = CurrentInteractables.FirstOrDefault(i => i is CanBlow);
@@ -134,6 +135,7 @@ public class Control : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && _groundCheck.IsOnGround)
 	    {
 	        yVel = 10f;
+            SfxManager.Instance.PlayJump();
 	    }
 
 	  
