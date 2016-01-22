@@ -108,7 +108,7 @@ public class Conductor : MonoBehaviour
 
     public void OnInput(object caller)
     {
-        BeatTracker.OnValidInputForBeat(Songposition, (Crotchet / 2f));
+        BeatTracker.OnValidInputForBeat(Songposition, (Crotchet / 1.5f));
 
         /*if (CheckIfInputTimeIsValid(Songposition))
         {
