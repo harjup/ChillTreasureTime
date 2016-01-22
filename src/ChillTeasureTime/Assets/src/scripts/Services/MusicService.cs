@@ -64,6 +64,11 @@ public class MusicService : Singleton<MusicService>
             TransitionToLighthouse();
         }
 
+        if (Application.loadedLevelName == "Village")
+        {
+            TransitionToLighthouse();
+        }
+
         if (Application.loadedLevelName == "Main")
         {
             TransitionToBeachSnow();
