@@ -223,6 +223,11 @@ public class BeatTracker : MonoBehaviour, IBeat
                 RhythmRival.Peck();
             }
 
+            if (b is PlayerBeat)
+            {
+                CountDownService.Instance.OnPlayerBeat();
+            }
+
             if (b is PlayerStartBeat)
             {
                 CountDownService.Instance.StartCountDown();

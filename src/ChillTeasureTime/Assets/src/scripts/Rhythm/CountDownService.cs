@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine.UI;
 
 public class CountDownService : Singleton<CountDownService>, IBeat
@@ -47,6 +48,16 @@ public class CountDownService : Singleton<CountDownService>, IBeat
         Arrow = GameObject.Find("CountDownArrow");
         Arrow.SetActive(false);
     }
+
+    public void OnPlayerBeat()
+    {
+        Arrow.transform.DOKill();
+        Arrow.transform.localPosition = Arrow.transform.localPosition.SetY(90f);
+        Arrow.transform.DOLocalMoveY(120f, .25f).ChangeEndValue(Ease.Linear);
+        Arrow.transform.DOPunchScale(Vector3.one * .1f, .25f);
+    }
+
+
 
     public void EndOfSet()
     {

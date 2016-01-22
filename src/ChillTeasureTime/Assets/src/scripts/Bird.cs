@@ -182,7 +182,7 @@ public class Bird : MonoBehaviour, IExaminable
 
                     _animator.CrossFade("Talk", 0f);
                     yield return StartCoroutine(_talkingUi.TextCrawl(
-                        new Line("Winston \"Collecto\"", "If you're having a hard time, try \"toggling\" the \"autoplay switch\" and let your body do the dancing!"),
+                        new Line("Winston \"Collecto\"", "If you're having a hard time, pay attention to when the helper arrow moves!"),
                         () =>
                         {
                             _animator.CrossFade("Idle", 0f);
