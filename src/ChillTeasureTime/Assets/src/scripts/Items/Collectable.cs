@@ -59,7 +59,7 @@ public class Collectable : MonoBehaviour
     {
         yield return DOTween
             .Sequence()
-            .Append(transform.DOLocalMoveY(transform.position.y + 3f, .5f).SetEase(Ease.Linear))
+            .Append(transform.DOLocalMoveY(transform.localPosition.y + 3f, .5f).SetEase(Ease.Linear))
             .WaitForCompletion();
 
         transform.DOScale(transform.localScale / 4f, .25f).SetEase(Ease.OutQuad);
@@ -67,7 +67,7 @@ public class Collectable : MonoBehaviour
         var timeElapsed = 0f;
         while ((transform.position - player.transform.position).magnitude > 1f)
         {
-            transform.position = iTween.Vector3Update(transform.position, player.transform.position, 10f);
+            transform.position = iTween.Vector3Update(transform.position, player.transform.position, 20f);
             timeElapsed += Time.smoothDeltaTime;
 
             if (timeElapsed > 2f)
