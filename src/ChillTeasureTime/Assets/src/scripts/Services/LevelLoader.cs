@@ -38,8 +38,8 @@ public class LevelLoader : Singleton<LevelLoader>
         }
     }
 
-    public void LoadFight()
+    public void LoadDance()
     {
-        Application.LoadLevel("Fight");
+        Application.LoadLevel("Dance");
     }
 }

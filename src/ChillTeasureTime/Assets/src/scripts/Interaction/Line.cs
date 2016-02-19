@@ -43,7 +43,7 @@ public class LeaveChoicePrompt : Direction
 {
 }
 
-public class LoadFight : Direction
+public class LoadDance : Direction
 {
     
 }

@@ -138,7 +138,7 @@ public class Bird : MonoBehaviour, IExaminable
                 yield return SceneFadeInOut.Instance.EndScene();
             }
 
-            if (direction is LoadFight)
+            if (direction is LoadDance)
             {
                 doneCallback();
 
@@ -148,7 +148,7 @@ public class Bird : MonoBehaviour, IExaminable
 
                 yield return new WaitForSeconds(.5f);
 
-                LevelLoader.Instance.LoadFight();
+                LevelLoader.Instance.LoadDance();
             }
 
             if (direction is FightChoicePrompt)
