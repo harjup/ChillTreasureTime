@@ -1,9 +1,29 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class FightWorkflow : MonoBehaviour
 {
+    public GameObject Player;
+    public string CurrentPlayerMove;
+
+    private FightMenu _fightMenu;
+
+    public void InitAttackSequence(GameObject target, string currentMove)
+    {
+        var initialPosition = Player.transform.position;
+
+        DOTween
+            .Sequence()
+            .Append(Player.transform.DOMove(target.transform.position, 1f))
+            .Append(Player.transform.DOMove(initialPosition, 1f))
+            .AppendCallback(() =>
+            {
+                _fightMenu.Enable();
+            });
+    }
+
     // Play intro
     // Set up player, enemies
     //- Show player menu
@@ -25,7 +45,8 @@ public class FightWorkflow : MonoBehaviour
 
     void Start()
     {
-
+        Player = GameObject.Find("BirdSprite");
+        _fightMenu = FindObjectOfType<FightMenu>();
     }
 
     void Update()

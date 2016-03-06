@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
+/// <summary>
+/// Step 2, shows a list of detail items for a menu item
+/// </summary>
 public class FightMenuDetail : MonoBehaviour
 {
     private GameObject _canvas;
@@ -11,13 +14,18 @@ public class FightMenuDetail : MonoBehaviour
 
     public ScrubList<GameObject> ScrubMenuItems;
 
-
+    private FightEnemyManager _fightEnemyManager;
     private FightMenu _fightMenu;
+    private FightWorkflow _fightWorkflow;
 
     // Use this for initialization
     void Start()
     {
         _fightMenu = FindObjectOfType<FightMenu>();
+
+        _fightEnemyManager = FindObjectOfType<FightEnemyManager>();
+
+        _fightWorkflow = FindObjectOfType<FightWorkflow>();
 
         _canvas = transform.GetComponentInChildren<Canvas>().gameObject;
         _backdrop = GameObject.Find("Backdrop").gameObject;
@@ -64,6 +72,7 @@ public class FightMenuDetail : MonoBehaviour
 
         ScrubMenuItems = new ScrubList<GameObject>(detailGameObjects);
 
+        SetCurrentMenuItem(ScrubMenuItems.Previous());
     }
 
     public void Disable()
@@ -89,7 +98,7 @@ public class FightMenuDetail : MonoBehaviour
             var pick = ScrubMenuItems.Current();
             Debug.Log(pick.name);
             Disable();
-            _fightMenu.Enable();
+            _fightEnemyManager.EnableEnemySelect();
         }
 
         if (Input.GetKeyDown(KeyCode.X))
