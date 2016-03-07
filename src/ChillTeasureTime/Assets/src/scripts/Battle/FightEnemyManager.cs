@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using DG.Tweening;
 
 //TODO: Rename to relate to player attack selection and not what the enemy behaviors are.
 public class FightEnemyManager : MonoBehaviour
@@ -11,15 +13,23 @@ public class FightEnemyManager : MonoBehaviour
 
     public ScrubList<GameObject> ActiveEnemies;
 
+    private FightMenu _fightMenu;
+
     private FightMenuDetail _fightMenuDetail;
 
     private FightWorkflow _fightWorkflow;
+
+    private GameObject _player;
 
     public void Start()
     {
         _fightMenuDetail = FindObjectOfType<FightMenuDetail>();
         _fightWorkflow = FindObjectOfType<FightWorkflow>();
         _spawnStart = GameObject.Find("EnemySpawnStart").gameObject;
+
+        _fightMenu = FindObjectOfType<FightMenu>();
+
+        _player = GameObject.Find("BirdSprite");
 
         var prefab = Resources.Load<GameObject>("Prefabs/Battle/SelectionArrow");
         _selectionArrow = Instantiate(prefab);
@@ -74,6 +84,26 @@ public class FightEnemyManager : MonoBehaviour
 
         ActiveEnemies = new ScrubList<GameObject>(Enemies);
     }
+
+    public IEnumerator DoEnemyTurns()
+    {
+        foreach (var activeEnemy in ActiveEnemies.ToList())
+        {
+            var initialPosition = activeEnemy.transform.position;
+
+            yield return DOTween
+                .Sequence()
+                .Append(activeEnemy.transform.DOMove(_player.transform.position, 1f))
+                .Append(activeEnemy.transform.DOMove(initialPosition, 1f))
+                .WaitForCompletion();
+        }
+
+        _fightMenu.Enable();
+
+        yield return null;
+    }
+
+
 
     public void EnableEnemySelect()
     {

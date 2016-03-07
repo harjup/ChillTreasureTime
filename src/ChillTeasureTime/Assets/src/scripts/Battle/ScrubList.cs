@@ -55,4 +55,9 @@ public class ScrubList<T>
         _index = 0;
         return _items[_index];
     }
+
+    public List<T> ToList()
+    {
+        return _items.ToList();
+    }
 }

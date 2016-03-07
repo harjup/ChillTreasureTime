@@ -10,6 +10,8 @@ public class FightWorkflow : MonoBehaviour
 
     private FightMenu _fightMenu;
 
+    private FightEnemyManager _fightEnemyManager;
+
     public void InitAttackSequence(GameObject target, string currentMove)
     {
         var initialPosition = Player.transform.position;
@@ -17,10 +19,17 @@ public class FightWorkflow : MonoBehaviour
         DOTween
             .Sequence()
             .Append(Player.transform.DOMove(target.transform.position, 1f))
+            .AppendCallback(() =>
+            {
+                // TODO: Tell the other guy they got hit
+                //target.GetComponent<>()
+            })
             .Append(Player.transform.DOMove(initialPosition, 1f))
             .AppendCallback(() =>
             {
-                _fightMenu.Enable();
+                //_fightMenu.Enable();
+                StartCoroutine(_fightEnemyManager.DoEnemyTurns());
+                // Do the enemy turns here
             });
     }
 
@@ -47,6 +56,7 @@ public class FightWorkflow : MonoBehaviour
     {
         Player = GameObject.Find("BirdSprite");
         _fightMenu = FindObjectOfType<FightMenu>();
+        _fightEnemyManager = FindObjectOfType<FightEnemyManager>();
     }
 
     void Update()
