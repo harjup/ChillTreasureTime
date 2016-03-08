@@ -21,15 +21,12 @@ public class FightWorkflow : MonoBehaviour
             .Append(Player.transform.DOMove(target.transform.position, 1f))
             .AppendCallback(() =>
             {
-                // TODO: Tell the other guy they got hit
-                //target.GetComponent<>()
+                target.GetComponent<CharacterStatus>().AddDamage(1);
             })
             .Append(Player.transform.DOMove(initialPosition, 1f))
             .AppendCallback(() =>
             {
-                //_fightMenu.Enable();
                 StartCoroutine(_fightEnemyManager.DoEnemyTurns());
-                // Do the enemy turns here
             });
     }
 

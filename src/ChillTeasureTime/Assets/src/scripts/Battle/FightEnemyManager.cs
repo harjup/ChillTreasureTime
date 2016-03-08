@@ -94,6 +94,10 @@ public class FightEnemyManager : MonoBehaviour
             yield return DOTween
                 .Sequence()
                 .Append(activeEnemy.transform.DOMove(_player.transform.position, 1f))
+                .AppendCallback(() =>
+                {
+                    _player.GetComponent<CharacterStatus>().AddDamage(1);
+                })
                 .Append(activeEnemy.transform.DOMove(initialPosition, 1f))
                 .WaitForCompletion();
         }
